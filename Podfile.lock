@@ -1,0 +1,74 @@
+PODS:
+  - Alamofire (4.9.1)
+  - IQKeyboardManagerSwift (6.5.6)
+  - MVVM-Swift (5.0.1)
+  - ObjectMapper (4.2.0)
+  - Realm (5.3.0):
+    - Realm/Headers (= 5.3.0)
+  - Realm/Headers (5.3.0)
+  - RealmSwift (5.3.0):
+    - Realm (= 5.3.0)
+  - SVProgressHUD (2.2.5)
+  - SwifterSwift (5.2.0):
+    - SwifterSwift/AppKit (= 5.2.0)
+    - SwifterSwift/CoreAnimation (= 5.2.0)
+    - SwifterSwift/CoreGraphics (= 5.2.0)
+    - SwifterSwift/CoreLocation (= 5.2.0)
+    - SwifterSwift/Dispatch (= 5.2.0)
+    - SwifterSwift/Foundation (= 5.2.0)
+    - SwifterSwift/MapKit (= 5.2.0)
+    - SwifterSwift/SceneKit (= 5.2.0)
+    - SwifterSwift/SpriteKit (= 5.2.0)
+    - SwifterSwift/StoreKit (= 5.2.0)
+    - SwifterSwift/SwiftStdlib (= 5.2.0)
+    - SwifterSwift/UIKit (= 5.2.0)
+  - SwifterSwift/AppKit (5.2.0)
+  - SwifterSwift/CoreAnimation (5.2.0)
+  - SwifterSwift/CoreGraphics (5.2.0)
+  - SwifterSwift/CoreLocation (5.2.0)
+  - SwifterSwift/Dispatch (5.2.0)
+  - SwifterSwift/Foundation (5.2.0)
+  - SwifterSwift/MapKit (5.2.0)
+  - SwifterSwift/SceneKit (5.2.0)
+  - SwifterSwift/SpriteKit (5.2.0)
+  - SwifterSwift/StoreKit (5.2.0)
+  - SwifterSwift/SwiftStdlib (5.2.0)
+  - SwifterSwift/UIKit (5.2.0)
+  - SwiftLint (0.40.2)
+
+DEPENDENCIES:
+  - Alamofire (= 4.9.1)
+  - IQKeyboardManagerSwift
+  - MVVM-Swift
+  - ObjectMapper
+  - RealmSwift (= 5.3.0)
+  - SVProgressHUD
+  - SwifterSwift
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - IQKeyboardManagerSwift
+    - MVVM-Swift
+    - ObjectMapper
+    - Realm
+    - RealmSwift
+    - SVProgressHUD
+    - SwifterSwift
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  MVVM-Swift: 0333cd8a16abfe0e93a1423bfddb49b8c11065e1
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  Realm: 81b533e4d02518e3e36a702d43a716b48bf89ed6
+  RealmSwift: d8954b0c203d532cfa8412ab18e2da01eb071aa4
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
+  SwiftLint: 1216c910d27c2633ade33b4f071bb6b930982e62
+
+PODFILE CHECKSUM: d16ca9b4f0748990464d1b0c10c95a1dc8534b2e
+
+COCOAPODS: 1.9.3

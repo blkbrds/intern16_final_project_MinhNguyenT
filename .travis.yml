@@ -1,0 +1,14 @@
+language: objective-c
+osx_image: xcode11
+xcode_workspace: EateryTour.xcworkspace
+xcode_scheme: EateryTour
+cache:
+  - bundler
+  - cocoapods
+before_install:
+  - bundle install
+  - bundle exec pod install --repo-update
+install:
+  - sudo systemsetup -settimezone Asia/Ho_Chi_Minh
+script:
+  - ./scripts/linter
