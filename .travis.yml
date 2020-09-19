@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode11
-xcode_workspace: EateryTour.xcworkspace
-xcode_scheme: EateryTour
+xcode_workspace: Youtube.xcworkspace
+xcode_scheme: Youtube
 cache:
   - bundler
   - cocoapods
