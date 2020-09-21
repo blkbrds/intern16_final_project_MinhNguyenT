@@ -17,8 +17,14 @@ extension App {
     struct String { }
 }
 
-extension App.String {
-}
+extension App.String { }
 
+struct ClientID {
+    static let clientID = "228058490948-sg35mpbqq3gckmd83nn9h681olod8rkf.apps.googleusercontent.com"
+}
 struct UserDefaultKeys {
+    static let userID = "userID"
+    static let emailUser = "emailUser"
+    static let nameUser = "nameUser"
+    static let imageUser = "imageUser"
 }

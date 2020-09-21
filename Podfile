@@ -14,6 +14,9 @@ def app_pods
   pod 'SwifterSwift'
   pod 'IQKeyboardManagerSwift'
   # Data
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'GoogleSignIn'
   pod 'ObjectMapper'
   pod 'RealmSwift', '5.3.0'
   # Network
