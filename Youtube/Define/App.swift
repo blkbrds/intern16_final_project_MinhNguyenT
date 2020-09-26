@@ -9,3 +9,7 @@
 import Foundation
 
 struct App { }
+
+struct ClientID {
+    static let clientID = "228058490948-sg35mpbqq3gckmd83nn9h681olod8rkf.apps.googleusercontent.com"
+}

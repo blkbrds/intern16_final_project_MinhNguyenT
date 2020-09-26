@@ -11,13 +11,23 @@ import GoogleSignIn
 
 final class LoginViewController: ViewController {
 
+    // MARK: - IBOutlets
     @IBOutlet private weak var signInButton: GIDSignInButton!
+
+    // MARK: - Properties
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configButton()
+    }
+
+    // MARK: - Private
+    private func configButton() {
         signInButton.style = .wide
-        signInButton.layer.cornerRadius = 10
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
 }

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Youtube" customModuleProvider="target">
             <connections>
@@ -18,33 +23,72 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="786906" translatesAutoresizingMaskIntoConstraints="NO" id="6de-bN-MeK">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-login" translatesAutoresizingMaskIntoConstraints="NO" id="6de-bN-MeK" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xme-Yy-WlO" customClass="GIDSignInButton">
-                    <rect key="frame" x="80" y="677" width="254" height="80"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rN5-sk-g8N" userLabel="Blur View">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNF-rP-m1U" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-login-logo" translatesAutoresizingMaskIntoConstraints="NO" id="fUI-ri-cfa" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
+                            <rect key="frame" x="107" y="150" width="200" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="V4w-hg-nYF"/>
+                                <constraint firstAttribute="width" secondItem="fUI-ri-cfa" secondAttribute="height" multiplier="2083:833" id="h5r-6Z-ROf"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOT-5s-0A4" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                            <rect key="frame" x="187" y="737" width="40" height="19"/>
+                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xme-Yy-WlO" customClass="GIDSignInButton">
+                            <rect key="frame" x="40" y="766" width="334" height="80"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="KI2-1f-QKR"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="80" id="KI2-1f-QKR"/>
+                        <constraint firstItem="QOT-5s-0A4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kNF-rP-m1U" secondAttribute="leading" constant="30" id="1fK-Ev-Z4D"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QOT-5s-0A4" secondAttribute="trailing" constant="30" id="3d0-Ya-OYv"/>
+                        <constraint firstAttribute="trailing" secondItem="Xme-Yy-WlO" secondAttribute="trailing" constant="40" id="6Oe-26-oEb"/>
+                        <constraint firstItem="fUI-ri-cfa" firstAttribute="top" secondItem="kNF-rP-m1U" secondAttribute="top" constant="150" id="9LH-Lw-DLl"/>
+                        <constraint firstAttribute="bottom" secondItem="Xme-Yy-WlO" secondAttribute="bottom" constant="50" id="Tgf-d1-6Sr"/>
+                        <constraint firstItem="QOT-5s-0A4" firstAttribute="centerX" secondItem="kNF-rP-m1U" secondAttribute="centerX" id="WqC-Hh-pjq"/>
+                        <constraint firstItem="fUI-ri-cfa" firstAttribute="centerX" secondItem="kNF-rP-m1U" secondAttribute="centerX" id="gn7-3V-xFT"/>
+                        <constraint firstItem="Xme-Yy-WlO" firstAttribute="top" secondItem="QOT-5s-0A4" secondAttribute="bottom" constant="10" id="i3V-NK-5cB"/>
+                        <constraint firstItem="Xme-Yy-WlO" firstAttribute="leading" secondItem="kNF-rP-m1U" secondAttribute="leading" constant="40" id="koX-yD-NuP"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="6de-bN-MeK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7J5-y1-Cc2"/>
-                <constraint firstItem="Xme-Yy-WlO" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="1.6" id="7eW-g1-7LR"/>
-                <constraint firstItem="6de-bN-MeK" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8K7-0k-lRH"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Xme-Yy-WlO" secondAttribute="trailing" constant="80" id="A4O-ay-drG"/>
-                <constraint firstAttribute="bottom" secondItem="6de-bN-MeK" secondAttribute="bottom" id="LQg-gd-hAs"/>
-                <constraint firstItem="6de-bN-MeK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aml-KM-TOa"/>
-                <constraint firstItem="Xme-Yy-WlO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="80" id="fnw-8U-6vf"/>
-                <constraint firstItem="Xme-Yy-WlO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xK6-DY-wGZ"/>
+                <constraint firstAttribute="bottom" secondItem="rN5-sk-g8N" secondAttribute="bottom" id="5Vq-Iz-HGh"/>
+                <constraint firstAttribute="trailing" secondItem="kNF-rP-m1U" secondAttribute="trailing" id="7DH-Ok-Ruw"/>
+                <constraint firstAttribute="bottom" secondItem="kNF-rP-m1U" secondAttribute="bottom" id="7tG-TZ-Ggq"/>
+                <constraint firstItem="kNF-rP-m1U" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BjJ-WC-4T5"/>
+                <constraint firstAttribute="trailing" secondItem="rN5-sk-g8N" secondAttribute="trailing" id="Cow-fJ-M7s"/>
+                <constraint firstItem="kNF-rP-m1U" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="NQJ-lP-TcC"/>
+                <constraint firstItem="6de-bN-MeK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="OfZ-de-Fi4"/>
+                <constraint firstAttribute="bottom" secondItem="6de-bN-MeK" secondAttribute="bottom" id="PLu-F2-Mp6"/>
+                <constraint firstItem="6de-bN-MeK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Y1a-RV-hXR"/>
+                <constraint firstItem="rN5-sk-g8N" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rKe-4U-QQb"/>
+                <constraint firstItem="6de-bN-MeK" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="roV-8A-8of"/>
+                <constraint firstItem="rN5-sk-g8N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zer-rt-kcd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="132.58928571428572"/>
         </view>
     </objects>
     <resources>
-        <image name="786906" width="1080" height="1920"/>
+        <image name="img-login" width="1242" height="2208"/>
+        <image name="img-login-logo" width="2083" height="833"/>
     </resources>
 </document>

@@ -54,6 +54,9 @@
 		A3AED5412516569100B5E6D0 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3AED53C2516569100B5E6D0 /* SF-Pro-Text-Medium.otf */; };
 		A3AED5442516584700B5E6D0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AED5422516584700B5E6D0 /* HomeViewController.swift */; };
 		A3AED5452516584700B5E6D0 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3AED5432516584700B5E6D0 /* HomeViewController.xib */; };
+		A3C75D80251FAF35001D024F /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C75D7F251FAF35001D024F /* Key.swift */; };
+		A3C75D82251FB452001D024F /* OptionalExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C75D81251FB452001D024F /* OptionalExt.swift */; };
+		A3C75D84251FBF31001D024F /* UIApplicationExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C75D83251FBF31001D024F /* UIApplicationExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +123,9 @@
 		A3AED53C2516569100B5E6D0 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		A3AED5422516584700B5E6D0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A3AED5432516584700B5E6D0 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		A3C75D7F251FAF35001D024F /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		A3C75D81251FB452001D024F /* OptionalExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExt.swift; sourceTree = "<group>"; };
+		A3C75D83251FBF31001D024F /* UIApplicationExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExt.swift; sourceTree = "<group>"; };
 		CF83CF111D5740A0F4FEE574 /* Pods_Youtube.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Youtube.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1204E164263B32018D70080 /* Pods-YoutubeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YoutubeTests.release.xcconfig"; path = "Target Support Files/Pods-YoutubeTests/Pods-YoutubeTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,7 +218,9 @@
 				A3AED4D725164D2700B5E6D0 /* DictionaryExt.swift */,
 				A3AED4DC25164D2700B5E6D0 /* NSErrorExt.swift */,
 				A3AED4DD25164D2700B5E6D0 /* NSURLExt.swift */,
+				A3C75D81251FB452001D024F /* OptionalExt.swift */,
 				A3AED4D625164D2700B5E6D0 /* StringExt.swift */,
+				A3C75D83251FBF31001D024F /* UIApplicationExt.swift */,
 				A3AED4D925164D2700B5E6D0 /* UIFontExt.swift */,
 				A3AED4DA25164D2700B5E6D0 /* UIViewControllerExt.swift */,
 				A3AED4D825164D2700B5E6D0 /* UIViewExt.swift */,
@@ -226,6 +234,7 @@
 				A3AED4E225164D2700B5E6D0 /* App.swift */,
 				A3AED4E025164D2700B5E6D0 /* Errors.swift */,
 				A3AED4E125164D2700B5E6D0 /* Font.swift */,
+				A3C75D7F251FAF35001D024F /* Key.swift */,
 				A3AED4DF25164D2700B5E6D0 /* String.swift */,
 			);
 			path = Define;
@@ -263,8 +272,8 @@
 		A3AED4FF2516502C00B5E6D0 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A3AED5002516502C00B5E6D0 /* Controller */,
 				A3AED5072516502C00B5E6D0 /* Base */,
+				A3AED5002516502C00B5E6D0 /* Controller */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -584,12 +593,14 @@
 				A3AED51B2516502D00B5E6D0 /* CollectionCell.swift in Sources */,
 				A3AED5242516502D00B5E6D0 /* ImageView.swift in Sources */,
 				A3AED51C2516502D00B5E6D0 /* CollectionViewHeaderView.swift in Sources */,
+				A3C75D82251FB452001D024F /* OptionalExt.swift in Sources */,
 				A3AED4F625164D2700B5E6D0 /* Errors.swift in Sources */,
 				A3AED5262516502D00B5E6D0 /* TabBarController.swift in Sources */,
 				A3AED4EC25164D2700B5E6D0 /* DataExt.swift in Sources */,
 				A3AED5232516502D00B5E6D0 /* TableCell.swift in Sources */,
 				A3AED4FE25164D2700B5E6D0 /* Api.swift in Sources */,
 				A3AED4F025164D2700B5E6D0 /* UIFontExt.swift in Sources */,
+				A3C75D80251FAF35001D024F /* Key.swift in Sources */,
 				A3AED51D2516502D00B5E6D0 /* Label.swift in Sources */,
 				A3AED5342516538D00B5E6D0 /* LoginViewController.swift in Sources */,
 				A3AED4F925164D2700B5E6D0 /* Session.swift in Sources */,
@@ -601,6 +612,7 @@
 				A3AED5222516502D00B5E6D0 /* TableView.swift in Sources */,
 				A3AED4B225164B3800B5E6D0 /* AppDelegate.swift in Sources */,
 				A3AED4FB25164D2700B5E6D0 /* Error.swift in Sources */,
+				A3C75D84251FBF31001D024F /* UIApplicationExt.swift in Sources */,
 				A3AED4F325164D2700B5E6D0 /* NSErrorExt.swift in Sources */,
 				A3AED5252516502D00B5E6D0 /* Button.swift in Sources */,
 			);

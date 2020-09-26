@@ -22,6 +22,7 @@ let screenSize = UIScreen.main.bounds
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
+
     static let shared: AppDelegate = {
         guard let shared = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("Cannot cast `UIApplication.shared.delegate` to `AppDelegate`.")
@@ -30,43 +31,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
-        GIDSignIn.sharedInstance()?.clientID = ClientID.clientID
-        GIDSignIn.sharedInstance()?.delegate = self
+        configFirebase()
+        configGIDSignIn()
         configWindow()
+        return true
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if let canBeHandled = GIDSignIn.sharedInstance()?.handle(url) {
+            return canBeHandled
+        }
         return true
     }
 
     private func configWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
-        changeRoot(rootType: .login)
         window?.makeKeyAndVisible()
-    }
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return GIDSignIn.sharedInstance()?.handle(url) ?? false
-    }
-
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if error == nil {
-            ud.set(user.userID, forKey: UserDefaultKeys.userID)
-            ud.set(user.profile.name, forKey: UserDefaultKeys.emailUser)
-            ud.set(user.profile.name, forKey: UserDefaultKeys.nameUser)
-            if user.profile.hasImage {
-                let imageUrl = signIn.currentUser.profile.imageURL(withDimension: 150)
-                ud.set(imageUrl?.absoluteString ?? "no image", forKey: UserDefaultKeys.imageUser)
-            }
-            changeRoot(rootType: .tabbar)
+        if Session.shared.isLogin {
+            setRoot(rootType: .tabbar)
+        } else {
+            setRoot(rootType: .login)
         }
     }
 
-    func changeRoot(rootType: RootType) {
+    private func configFirebase() {
+        FirebaseApp.configure()
+    }
+
+    private func configGIDSignIn() {
+        GIDSignIn.sharedInstance()?.clientID = ClientID.clientID
+        GIDSignIn.sharedInstance()?.delegate = self
+    }
+
+    func setRoot(rootType: RootType) {
         switch rootType {
         case .login:
+            Session.shared.clearData()
             window?.rootViewController = LoginViewController()
         case .tabbar:
+            Session.shared.isLogin = true
             window?.rootViewController = HomeViewController()
+        }
+    }
+}
+
+// MARK: - GIDSignIn
+extension AppDelegate {
+
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            UIApplication.topViewController()?.showErrorAlert(error: error, completion: { _ in
+                self.setRoot(rootType: .login)
+            })
+        } else {
+            Session.shared.saveLoginInfo(userID: user.userID, userEmail: user.profile.email, userName: user.profile.name)
+            if let imageURL = signIn.currentUser.profile.imageURL(withDimension: 150), user.profile.hasImage {
+                Session.shared.userImageURL = imageURL.absoluteString
+            }
+            setRoot(rootType: .tabbar)
         }
     }
 }
