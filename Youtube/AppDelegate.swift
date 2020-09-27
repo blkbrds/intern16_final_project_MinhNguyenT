@@ -78,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 // MARK: - GIDSignIn
 extension AppDelegate {
-
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             UIApplication.topViewController()?.showErrorAlert(error: error, completion: { _ in

@@ -14,15 +14,15 @@ final class LoginViewController: ViewController {
     // MARK: - IBOutlets
     @IBOutlet private weak var signInButton: GIDSignInButton!
 
-    // MARK: - Properties
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarStyle = .lightContent
     }
 
     // MARK: - Private
