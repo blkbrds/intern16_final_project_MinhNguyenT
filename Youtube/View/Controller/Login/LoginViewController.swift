@@ -7,11 +7,27 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 final class LoginViewController: ViewController {
+
+    // MARK: - IBOutlets
+    @IBOutlet private weak var signInButton: GIDSignInButton!
 
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarStyle = .lightContent
+    }
+
+    // MARK: - Private
+    private func configButton() {
+        signInButton.style = .wide
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
 }

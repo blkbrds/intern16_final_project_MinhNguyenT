@@ -17,8 +17,4 @@ extension App {
     struct String { }
 }
 
-extension App.String {
-}
-
-struct UserDefaultKeys {
-}
+extension App.String { }

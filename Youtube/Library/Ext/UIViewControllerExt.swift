@@ -10,24 +10,35 @@ import UIKit
 
 extension UIViewController {
 
-    func alert(title: String? = nil,
-               msg: String,
-               buttons: [String] = ["OK"],
-               preferButton: String = "",
-               handler: ((UIAlertAction) -> Void)?) {
-        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
-        for button in buttons {
-            let action = UIAlertAction(title: button, style: .default, handler: { action in
-                handler?(action)
+    func showAlert(title: String?,
+                   message: String?,
+                   buttonTitles: [String]? = nil,
+                   highlightedButtonIndex: Int? = nil,
+                   completion: ((Int) -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        var allButtons = buttonTitles ?? [String]()
+        if allButtons.isEmpty {
+            allButtons.append("OK")
+        }
+        for index in 0..<allButtons.count {
+            let buttonTitle = allButtons[index]
+            let action = UIAlertAction(title: buttonTitle, style: .default, handler: { (_) in
+                completion?(index)
             })
-            alert.addAction(action)
-
-            // Bold button title
-            if preferButton.isNotEmpty && preferButton == button {
-                alert.preferredAction = action
+            alertController.addAction(action)
+            if let highlightedButtonIndex = highlightedButtonIndex, index == highlightedButtonIndex {
+                if #available(iOS 9.0, *) {
+                    alertController.preferredAction = action
+                }
             }
         }
+        present(alertController, animated: true, completion: nil)
+    }
 
-        present(alert, animated: true, completion: nil)
+    func showErrorAlert(error: Error, completion: ((Int) -> Void)? = nil) {
+        showAlert(title: "",
+                  message: error.localizedDescription,
+                  buttonTitles: ["OK"],
+                  completion: completion)
     }
 }
