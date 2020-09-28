@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeCell" customModule="Youtube" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="350" id="KGk-i7-Jjw" customClass="HomeCell" customModule="Youtube" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jNc-T9-MPu" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="20" y="15" width="354" height="180"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="180" id="ZjQ-8W-W4b"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="QUÂN A.P | BÔNG HOA ĐẸP NHẤT | OFFICIAL MUSIC VIDEO" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQu-GK-D28" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="35" y="215" width="324" height="35"/>
+                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ovv-nt-TUI" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="35" y="294" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="2xL-Kq-Bqu"/>
+                            <constraint firstAttribute="width" secondItem="Ovv-nt-TUI" secondAttribute="height" multiplier="1:1" id="iHo-GT-hVu"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="uD8-wI-txp" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="87" y="306" width="155" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FnY-Hk-npI" customClass="Button" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="257" y="294" width="110" height="40"/>
+                        <color key="backgroundColor" red="0.77403223509999997" green="0.1860117614" blue="0.14112445709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="FG0-Ib-rQV"/>
+                            <constraint firstAttribute="width" constant="110" id="JD6-ba-3N7"/>
+                        </constraints>
+                        <state key="normal" title="Subscribe">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="subscriptionButtonTouchUpInside:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7IE-kk-NIY"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="222k views  |  3 day ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmv-LX-i95" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="35" y="263" width="324" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gD2-LC-mUe">
+                        <rect key="frame" x="40" y="148" width="43" height="27"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPu-JK-jTm" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="27" height="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iPu-JK-jTm" firstAttribute="leading" secondItem="gD2-LC-mUe" secondAttribute="leading" constant="8" id="7TK-at-pSj"/>
+                            <constraint firstItem="iPu-JK-jTm" firstAttribute="top" secondItem="gD2-LC-mUe" secondAttribute="top" constant="8" id="7Zn-uV-D9N"/>
+                            <constraint firstAttribute="bottom" secondItem="iPu-JK-jTm" secondAttribute="bottom" constant="8" id="Xm2-tc-Fxs"/>
+                            <constraint firstAttribute="height" constant="27" id="fmZ-4I-Eku"/>
+                            <constraint firstAttribute="trailing" secondItem="iPu-JK-jTm" secondAttribute="trailing" constant="8" id="lwO-RC-Ned"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="uD8-wI-txp" firstAttribute="leading" secondItem="Ovv-nt-TUI" secondAttribute="trailing" constant="12" id="3Pp-ns-uZk"/>
+                    <constraint firstItem="Zmv-LX-i95" firstAttribute="top" secondItem="DQu-GK-D28" secondAttribute="bottom" constant="13" id="Hqb-jY-2tc"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Ovv-nt-TUI" secondAttribute="bottom" constant="5" id="IlO-wn-zhK"/>
+                    <constraint firstAttribute="trailing" secondItem="jNc-T9-MPu" secondAttribute="trailing" constant="20" id="NNF-81-rjZ"/>
+                    <constraint firstItem="DQu-GK-D28" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="35" id="RpS-8K-6Dk"/>
+                    <constraint firstItem="Zmv-LX-i95" firstAttribute="leading" secondItem="DQu-GK-D28" secondAttribute="leading" id="Tsr-IO-cDa"/>
+                    <constraint firstItem="FnY-Hk-npI" firstAttribute="centerY" secondItem="Ovv-nt-TUI" secondAttribute="centerY" id="X4o-Nr-QP9"/>
+                    <constraint firstItem="FnY-Hk-npI" firstAttribute="leading" secondItem="uD8-wI-txp" secondAttribute="trailing" constant="15" id="a2n-GY-H0Z"/>
+                    <constraint firstItem="uD8-wI-txp" firstAttribute="centerY" secondItem="Ovv-nt-TUI" secondAttribute="centerY" id="cyO-PF-yvT"/>
+                    <constraint firstAttribute="trailing" secondItem="DQu-GK-D28" secondAttribute="trailing" constant="35" id="fof-dB-lZd"/>
+                    <constraint firstItem="DQu-GK-D28" firstAttribute="top" secondItem="jNc-T9-MPu" secondAttribute="bottom" constant="20" id="g61-sF-GIJ"/>
+                    <constraint firstItem="Ovv-nt-TUI" firstAttribute="leading" secondItem="Zmv-LX-i95" secondAttribute="leading" id="guj-Fp-WwI"/>
+                    <constraint firstItem="Zmv-LX-i95" firstAttribute="trailing" secondItem="DQu-GK-D28" secondAttribute="trailing" id="hDm-PX-aFh"/>
+                    <constraint firstItem="gD2-LC-mUe" firstAttribute="bottom" secondItem="jNc-T9-MPu" secondAttribute="bottom" constant="-20" id="kwq-WT-pah"/>
+                    <constraint firstItem="Ovv-nt-TUI" firstAttribute="top" secondItem="Zmv-LX-i95" secondAttribute="bottom" constant="15" id="qMi-gy-JCa"/>
+                    <constraint firstAttribute="trailing" secondItem="FnY-Hk-npI" secondAttribute="trailing" constant="27" id="rD7-BF-xv3"/>
+                    <constraint firstItem="jNc-T9-MPu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rJc-Vq-rkS"/>
+                    <constraint firstItem="gD2-LC-mUe" firstAttribute="leading" secondItem="jNc-T9-MPu" secondAttribute="leading" constant="20" id="v1b-WR-fYz"/>
+                    <constraint firstItem="jNc-T9-MPu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="zbL-Z3-y3a"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="channelImageView" destination="Ovv-nt-TUI" id="Ufb-lu-dU4"/>
+                <outlet property="channelTitleLabel" destination="uD8-wI-txp" id="3rF-vt-gtH"/>
+                <outlet property="datePublishLabel" destination="Zmv-LX-i95" id="lcx-Zg-CQB"/>
+                <outlet property="durationTimeLabel" destination="iPu-JK-jTm" id="J3s-rV-gsZ"/>
+                <outlet property="durationTimeView" destination="gD2-LC-mUe" id="llg-Li-wDH"/>
+                <outlet property="subcribeButton" destination="FnY-Hk-npI" id="xV0-NH-weU"/>
+                <outlet property="videoImageView" destination="jNc-T9-MPu" id="fQO-mB-eti"/>
+                <outlet property="videoTitleLabel" destination="DQu-GK-D28" id="oGA-62-WSs"/>
+            </connections>
+            <point key="canvasLocation" x="84.057971014492765" y="210.26785714285714"/>
+        </tableViewCell>
+    </objects>
+</document>
