@@ -34,20 +34,22 @@ final class TabbarViewController: ViewController {
         tabbarItemsTouchUpInSide(tabbarItemButton[selectIndex])
     }
 
+    // MARK: - Private functions
     private func setupUI() {
         subscribeButton.layer.cornerRadius = 20
         homeButton.layer.cornerRadius = homeButton.frame.height / 2
         tabbarView.layer.cornerRadius = 40
     }
 
-    func commentTextViewDidTapped() {
+    private func commentTextViewDidTapped() {
         tabbarView.isHidden = true
     }
 
-    func showTabbar() {
+    private func showTabbar() {
         tabbarView.isHidden = false
     }
 
+    // MARK: - @IBActions
     @IBAction private func tabbarItemsTouchUpInSide(_ sender: UIButton) {
         if sender.tag == 0 {
             sender.setTitleColor(.red, for: .normal)

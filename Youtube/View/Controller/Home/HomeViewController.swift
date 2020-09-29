@@ -25,7 +25,7 @@ final class HomeViewController: ViewController {
         configTableView()
         refreshVideo()
         getPlaylist(isLoadMore: false)
-        configSlider()
+        configNavi()
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
@@ -37,7 +37,7 @@ final class HomeViewController: ViewController {
         tableView.dataSource = self
     }
 
-    private func configSlider() {
+    private func configNavi() {
         if navi == nil {
             guard let navi = Bundle.main.loadNibNamed("NaviController", owner: self, options: nil)?.first as? NaviController else { return }
             navi.frame = CGRect(x: 0, y: 0, width: naviView.frame.width, height: naviView.frame.height)
@@ -56,7 +56,7 @@ final class HomeViewController: ViewController {
     }
 
     private func getPlaylist(isLoadMore: Bool) {
-        viewModel.loadVideos(isLoadMore: isLoadMore) { [weak self] (result) in
+        viewModel.loadApiForVideos(isLoadMore: isLoadMore) { [weak self] (result) in
             guard let this = self else { return }
             switch result {
             case .success:
@@ -93,12 +93,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell else { return UITableViewCell() }
         cell.indexPath = indexPath
-        cell.viewModel = viewModel.cellForRowAt(atIndexPath: indexPath)
         cell.delegate = self
+        cell.viewModel = viewModel.viewModelForItem(atIndexPath: indexPath)
         return cell
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY >= contentHeight - scrollView.frame.size.height {
+            getPlaylist(isLoadMore: true)
+        }
         if !decelerate {
             for cell in tableView.visibleCells {
                 if let cell = cell as? HomeCell {
@@ -106,23 +111,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offsetY >= contentHeight - scrollView.frame.size.height {
             getPlaylist(isLoadMore: true)
         }
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         for cell in tableView.visibleCells {
             if let cell = cell as? HomeCell {
                 cell.getImageChannel()
             }
-        }
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY >= contentHeight - scrollView.frame.size.height {
-            getPlaylist(isLoadMore: true)
         }
     }
 }
@@ -135,7 +135,7 @@ extension HomeViewController: HomeCellDelegate {
             viewModel.updateImageChannel(video: video)
         case .getDuration(indexPath: let indexPath):
             if let indexPath = indexPath {
-                viewModel.loadVideoDuration(at: indexPath) { [weak self] (result) in
+                viewModel.loadApiVideoDuration(at: indexPath) { [weak self] (result) in
                     guard let this = self else { return }
                     switch result {
                     case .success:

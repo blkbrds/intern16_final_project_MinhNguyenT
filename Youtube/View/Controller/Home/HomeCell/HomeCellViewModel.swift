@@ -9,6 +9,7 @@
 import Foundation
 
 final class HomeCellViewModel {
+
     private(set) var imageChannelURL: String = ""
     private(set) var video: Video?
     private(set) var duration: String?

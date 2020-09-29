@@ -22,11 +22,11 @@ final class HomeViewModel {
         }
     }
 
-    func cellForRowAt(atIndexPath indexPath: IndexPath) -> HomeCellViewModel {
+    func viewModelForItem(atIndexPath indexPath: IndexPath) -> HomeCellViewModel {
         return HomeCellViewModel(video: videos[indexPath.row])
     }
 
-    func loadVideos(isLoadMore: Bool, completion: @escaping APICompletion) {
+    func loadApiForVideos(isLoadMore: Bool, completion: @escaping APICompletion) {
         guard !isLoading else {
             completion(.failure(Api.Error.invalid))
             return
@@ -53,7 +53,7 @@ final class HomeViewModel {
         }
     }
 
-    func loadVideoDuration(at indexPath: IndexPath, completion: @escaping APICompletion) {
+    func loadApiVideoDuration(at indexPath: IndexPath, completion: @escaping APICompletion) {
         let params = Api.Home.DurationParams(part: "contentDetails", key: App.String.apiKey, id: videos[indexPath.row].videoID)
         Api.Home.getVideoDuration(params: params) { [weak self] (result) in
             guard let this = self else {

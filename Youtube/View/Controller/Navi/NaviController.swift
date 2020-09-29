@@ -9,27 +9,23 @@
 import UIKit
 import SDWebImage
 
-class NaviController: UIView {
+final class NaviController: UIView {
 
+    // MARK: - @IBOutlets
     @IBOutlet private weak var searchImage: ImageView!
     @IBOutlet private weak var profilImage: ImageView!
+
+    // MARK: - Override functions
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
 
+    // MARK: - Private functions
     private func setupUI() {
         searchImage.layer.cornerRadius = searchImage.frame.height / 2
         profilImage.layer.cornerRadius = profilImage.frame.height / 2
         guard let profileURL = URL(string: Session.shared.userImageURL) else { return }
         profilImage.sd_setImage(with: profileURL)
-    }
-
-    @IBAction private func searchTapGesture(_ sender: UITapGestureRecognizer) {
-        print("search")
-    }
-
-    @IBAction private func profileTapGesture(_ sender: UITapGestureRecognizer) {
-        print("profile")
     }
 }
