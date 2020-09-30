@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="Youtube" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="hOi-hp-fyM" id="bEw-Pi-XgZ"/>
+                <outlet property="videoView" destination="TUr-VH-Xnj" id="heM-kL-URj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hOi-hp-fyM">
+                    <rect key="frame" x="0.0" y="274" width="414" height="588"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TUr-VH-Xnj" customClass="WKYTPlayerView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="230"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="230" id="enZ-6l-7Cw"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="TUr-VH-Xnj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5gL-eJ-fJ9"/>
+                <constraint firstItem="hOi-hp-fyM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MFe-61-RHn"/>
+                <constraint firstItem="TUr-VH-Xnj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NXo-ja-a3s"/>
+                <constraint firstItem="hOi-hp-fyM" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Q6u-ZY-1KS"/>
+                <constraint firstItem="TUr-VH-Xnj" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="cqr-LU-naG"/>
+                <constraint firstItem="hOi-hp-fyM" firstAttribute="top" secondItem="TUr-VH-Xnj" secondAttribute="bottom" id="fbi-yc-JGM"/>
+                <constraint firstItem="hOi-hp-fyM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="gXG-CM-UDQ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="97.767857142857139"/>
+        </view>
+    </objects>
+</document>

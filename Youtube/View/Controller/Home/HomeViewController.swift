@@ -29,6 +29,12 @@ final class HomeViewController: ViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
+    // MARK: - Override functions
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        TabbarViewController.shared.showTabbar()
+//    }
+//    
     // MARK: - Private functions
     private func configTableView() {
         let nib = UINib(nibName: "HomeCell", bundle: .main)
@@ -96,6 +102,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.viewModel = viewModel.viewModelForItem(atIndexPath: indexPath)
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.viewModel = viewModel.viewModelForDetail(at: indexPath)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

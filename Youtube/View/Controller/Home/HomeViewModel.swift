@@ -26,6 +26,10 @@ final class HomeViewModel {
         return HomeCellViewModel(video: videos[indexPath.row])
     }
 
+    func viewModelForDetail(at indexPath: IndexPath) -> DetailViewModel {
+        return DetailViewModel(video: videos[indexPath.row])
+    }
+
     func loadApiForVideos(isLoadMore: Bool, completion: @escaping APICompletion) {
         guard !isLoading else {
             completion(.failure(Api.Error.invalid))

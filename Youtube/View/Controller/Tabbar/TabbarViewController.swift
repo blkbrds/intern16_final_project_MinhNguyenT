@@ -16,6 +16,9 @@ final class TabbarViewController: ViewController {
     @IBOutlet private weak var homeButton: Button!
     @IBOutlet private weak var tabbarView: UIView!
     @IBOutlet private var tabbarItemButton: [UIButton]!
+    @IBOutlet private weak var tabbarHeightConstraint: NSLayoutConstraint!
+
+    static var shared = TabbarViewController()
 
     // MARK: - Peroperties
     private let homeVC = HomeViewController()
@@ -41,12 +44,14 @@ final class TabbarViewController: ViewController {
         tabbarView.layer.cornerRadius = 40
     }
 
-    private func commentTextViewDidTapped() {
+    func hiddenTabbar() {
         tabbarView.isHidden = true
+        tabbarHeightConstraint.constant = 0
     }
 
-    private func showTabbar() {
+    func showTabbar() {
         tabbarView.isHidden = false
+        tabbarHeightConstraint.constant = 90
     }
 
     // MARK: - @IBActions

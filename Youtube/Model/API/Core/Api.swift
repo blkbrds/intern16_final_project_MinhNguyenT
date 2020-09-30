@@ -16,6 +16,7 @@ final class Api {
     }
 
     struct Home { }
+    struct Detail { }
 }
 
 extension Api.Path {
@@ -29,6 +30,20 @@ extension Api.Path {
         }
 
         static var imageChannel: String {
+            return baseURL / "channels"
+        }
+    }
+
+    struct Detail {
+        static var videos: String {
+            return baseURL / "videos"
+        }
+
+        static var comment: String {
+            return baseURL / "commentThreads"
+        }
+
+        static var videoChannel: String {
             return baseURL / "channels"
         }
     }

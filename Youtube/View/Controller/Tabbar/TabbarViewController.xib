@@ -12,6 +12,7 @@
                 <outlet property="conternerView" destination="aLp-ZT-2N9" id="3Qx-sm-zYu"/>
                 <outlet property="homeButton" destination="Y1h-5P-w4u" id="Sye-ME-sDB"/>
                 <outlet property="subscribeButton" destination="t9J-7A-7NK" id="dQY-mL-gNd"/>
+                <outlet property="tabbarHeightConstraint" destination="UX1-K7-yA3" id="rBp-fU-eQf"/>
                 <outlet property="tabbarView" destination="wug-Az-28q" id="wfH-FH-czI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="tabbarItemButton" destination="t9J-7A-7NK" collectionClass="NSMutableArray" id="CMl-gi-5y0"/>
