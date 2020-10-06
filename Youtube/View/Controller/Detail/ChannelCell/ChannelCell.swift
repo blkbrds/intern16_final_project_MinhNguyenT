@@ -48,7 +48,7 @@ final class ChannelCell: UITableViewCell {
     // MARK: - IBActions
     @IBAction private func scribeButtonTouchUpInside(_ sender: Button) {
         if isScribed {
-            scribeButton.setImage(UIImage(systemName: "bell.fill"), for: .normal)
+            scribeButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
             scribeButton.tintColor = .red
             isScribed = false
         } else {

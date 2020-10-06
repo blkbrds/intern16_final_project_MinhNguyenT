@@ -8,9 +8,11 @@
 
 import UIKit
 
-class SubscriptionViewController: UIViewController {
+final class SubscriptionViewController: UIViewController {
 
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Subcribe"
     }
 }

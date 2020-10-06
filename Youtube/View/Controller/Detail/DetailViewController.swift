@@ -20,19 +20,19 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         super.viewDidLoad()
         setUpUI()
         updateUI()
+        configBackButton()
         fetchDataDetail()
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
-        swipeLeft.direction = .right
-        view.addGestureRecognizer(swipeLeft)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
         TabbarViewController.shared.hiddenTabbar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = true
         TabbarViewController.shared.showTabbar()
     }
 
@@ -40,6 +40,12 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     var viewModel = DetailViewModel()
 
     // MARK: - Private functions
+    private func configBackButton() {
+        let backButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "previous"), style: .plain, target: self, action: #selector(backButtonTouchUpInside))
+        backButtonItem.tintColor = #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1)
+        navigationItem.leftBarButtonItem = backButtonItem
+    }
+
     private func setUpUI() {
         videoView.layer.cornerRadius = 25
     }
@@ -107,10 +113,8 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     }
 
     // MARK: - Objc functions
-    @objc private func handleGesture(gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == UISwipeGestureRecognizer.Direction.right {
-            navigationController?.popViewController(animated: true)
-        }
+    @objc func backButtonTouchUpInside() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

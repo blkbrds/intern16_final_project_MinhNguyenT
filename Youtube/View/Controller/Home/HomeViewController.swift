@@ -29,12 +29,6 @@ final class HomeViewController: ViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    // MARK: - Override functions
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        TabbarViewController.shared.showTabbar()
-//    }
-//    
     // MARK: - Private functions
     private func configTableView() {
         let nib = UINib(nibName: "HomeCell", bundle: .main)
