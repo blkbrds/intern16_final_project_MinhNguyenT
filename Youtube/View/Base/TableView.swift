@@ -29,4 +29,19 @@ class TableView: UITableView, MVVM.View {
             completion?()
         }
     }
+
+    func reloadRow(at indexPath: IndexPath, animation: RowAnimation = .none) {
+        reloadRows(at: [indexPath], with: animation)
+    }
+
+    override func reloadRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation) {
+        guard let visibleRows = indexPathsForVisibleRows else { return }
+        for indexPath in indexPaths where visibleRows.contains(indexPath) {
+            super.reloadRows(at: [indexPath], with: animation)
+        }
+    }
+}
+
+extension IndexPath {
+    static var zero: IndexPath = IndexPath(item: 0, section: 0)
 }

@@ -10,31 +10,24 @@ import Foundation
 
 final class HomeCellViewModel {
 
-    private(set) var imageChannelURL: String = ""
     private(set) var video: Video?
-    private(set) var duration: String?
+    private(set) var indexPath: IndexPath?
 
-    init(video: Video? = nil) {
+    init(video: Video? = nil, indexPath: IndexPath? = nil) {
         self.video = video
-        self.duration = video?.duration
-        if let imgChannel = video?.imageURL {
-            imageChannelURL = imgChannel
-        }
     }
 
-    func loadImageChannel(completion: @escaping APICompletion) {
-        guard let video = video, let id = video.channel?.id, !video.isLoadApiCompleted else {
+    func getChannelImage(completion: @escaping APICompletion) {
+        guard let video = video, let id = video.channel?.id, !video.isLoadImageChannelCompleted else {
             return
         }
         let params = Api.Home.ChannelParams(part: "snippet", id: id, key: App.String.apiKey)
         Api.Home.getImageChannel(params: params) { [weak self] (result) in
-            guard let this = self else {
-                return
-            }
+            guard let this = self else { return }
             switch result {
             case .success(let imageChannel):
-                this.video?.isLoadApiCompleted = true
-                this.imageChannelURL = imageChannel.imageURL
+                this.video?.isLoadImageChannelCompleted = true
+                this.video?.imageChannelURL = imageChannel.imageURL
                 completion(.success)
             case .failure(let error):
                 completion(.failure(error))

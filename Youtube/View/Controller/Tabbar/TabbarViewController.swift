@@ -11,71 +11,72 @@ import UIKit
 final class TabbarViewController: ViewController {
 
     // MARK: - @IBOutlets
-    @IBOutlet private weak var conternerView: UIView!
-    @IBOutlet private weak var subscribeButton: Button!
-    @IBOutlet private weak var homeButton: Button!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var tabbarView: UIView!
+    @IBOutlet private weak var subscribeButton: Button!
+    @IBOutlet private weak var subscribeButtonImageView: ImageView!
+    @IBOutlet private weak var homeButton: Button!
+    @IBOutlet private weak var homeButtonImageView: ImageView!
+    @IBOutlet private weak var homeButtonTitleLabel: Label!
     @IBOutlet private var tabbarItemButton: [UIButton]!
-    @IBOutlet private weak var tabbarHeightConstraint: NSLayoutConstraint!
-
-    static var shared = TabbarViewController()
+    @IBOutlet private weak var tabbarViewHeightConstraint: NSLayoutConstraint!
 
     // MARK: - Peroperties
+    static var shared = TabbarViewController()
     private let homeVC = HomeViewController()
-    private let subScriptionVC = SubscriptionViewController()
-    private var selectIndex: Int = 1
+    private let favoriteVC = FavoritesViewController()
+    private var selectedIndex: Int = 0
     private var viewControllers: [UIViewController] = []
 
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        let homeNavi = UINavigationController(rootViewController: homeVC)
-        let subNavi = UINavigationController(rootViewController: subScriptionVC)
-        viewControllers = [homeNavi, subNavi]
-        tabbarItemButton[selectIndex].isSelected = true
-        tabbarItemsTouchUpInSide(tabbarItemButton[selectIndex])
+        configTabbar()
     }
 
     // MARK: - Private functions
-    private func setupUI() {
-        subscribeButton.layer.cornerRadius = 20
-        homeButton.layer.cornerRadius = homeButton.frame.height / 2
-        tabbarView.layer.cornerRadius = 40
+    private func configTabbar() {
+        let homeNavi = UINavigationController(rootViewController: homeVC)
+        let favoriteNavi = UINavigationController(rootViewController: favoriteVC)
+        viewControllers = [homeNavi, favoriteNavi]
+        tabbarItemButton[selectedIndex].isSelected = true
+        tabbarItemButtonTouchUpInside(tabbarItemButton[selectedIndex])
+        tabbarViewHeightConstraint.constant = App.LayoutGuide.tabBarHeight
+        tabbarView.layer.cornerRadius = tabbarViewHeightConstraint.constant / 2
+        homeButton.layer.cornerRadius = (tabbarViewHeightConstraint.constant - 30) / 2
     }
 
     func hiddenTabbar() {
         tabbarView.isHidden = true
-        tabbarHeightConstraint.constant = 0
+        tabbarViewHeightConstraint.constant = 0
     }
 
     func showTabbar() {
         tabbarView.isHidden = false
-        tabbarHeightConstraint.constant = 90
+        tabbarViewHeightConstraint.constant = 90
     }
 
     // MARK: - @IBActions
-    @IBAction private func tabbarItemsTouchUpInSide(_ sender: UIButton) {
+    @IBAction private func tabbarItemButtonTouchUpInside(_ sender: UIButton) {
         if sender.tag == 0 {
-            sender.setTitleColor(.red, for: .normal)
-            homeButton.tintColor = .red
-            subscribeButton.tintColor = .black
+            homeButtonImageView.tintColor = App.Color.appColor
+            homeButtonTitleLabel.textColor = App.Color.appColor
+            subscribeButtonImageView.tintColor = .black
         } else {
-            sender.setTitleColor(.red, for: .normal)
-            homeButton.setTitleColor(.black, for: .normal)
-            subscribeButton.tintColor = .red
-            homeButton.tintColor = .black
+            homeButtonImageView.tintColor = .black
+            homeButtonTitleLabel.textColor = .black
+            subscribeButtonImageView.tintColor = App.Color.appColor
         }
-        selectIndex = sender.tag
-        let previousVC = viewControllers[selectIndex]
+        selectedIndex = sender.tag
+        let previousVC = viewControllers[selectedIndex]
         previousVC.willMove(toParent: nil)
         previousVC.view.removeFromSuperview()
         previousVC.removeFromParent()
         sender.isSelected = true
-        let vc = viewControllers[selectIndex]
+        let vc = viewControllers[selectedIndex]
         addChild(vc)
-        vc.view.frame = conternerView.bounds
-        conternerView.addSubview(vc.view)
+        vc.view.frame = containerView.bounds
+        containerView.addSubview(vc.view)
         vc.didMove(toParent: self)
     }
 }

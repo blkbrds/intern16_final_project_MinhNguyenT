@@ -8,33 +8,34 @@
 
 import Foundation
 
-final class HomeViewModel {
+final class HomeViewModel: ViewModel {
 
     // MARK: - Peroperties
-    var videos: [Video] = []
+    private var videos: [Video] = []
     private var nextPageToken: String = ""
     var isLoading: Bool = false
 
     // MARK: - Functions
-    func updateImageChannel(video: Video) {
-        for (index, video) in videos.enumerated() where video.videoID == video.videoID {
-            videos[index].isLoadApiCompleted = video.isLoadApiCompleted
-        }
+    func numberOfItems(inSection section: Int) -> Int {
+        return videos.count
     }
 
-    func viewModelForItem(atIndexPath indexPath: IndexPath) -> HomeCellViewModel {
-        return HomeCellViewModel(video: videos[indexPath.row])
+    func viewModelForItem(at indexPath: IndexPath) -> HomeCellViewModel {
+        return HomeCellViewModel(video: videos[indexPath.row], indexPath: indexPath)
     }
 
     func viewModelForDetail(at indexPath: IndexPath) -> DetailViewModel {
         return DetailViewModel(video: videos[indexPath.row])
     }
 
-    func loadApiForVideos(isLoadMore: Bool, completion: @escaping APICompletion) {
-        guard !isLoading else {
-            completion(.failure(Api.Error.invalid))
-            return
+    func updateVideo(video: Video) {
+        for (index, video) in videos.enumerated() where video.videoID == video.videoID {
+            videos[index] = video
         }
+    }
+
+    func getPlayLists(isLoadMore: Bool, completion: @escaping APICompletion) {
+        guard !isLoading else { return }
         if !isLoadMore {
             nextPageToken = ""
         }
@@ -57,13 +58,11 @@ final class HomeViewModel {
         }
     }
 
-    func loadApiVideoDuration(at indexPath: IndexPath, completion: @escaping APICompletion) {
+    func getVideoDuration(at indexPath: IndexPath, completion: @escaping APICompletion) {
+        guard videos[indexPath.row].duration.isEmpty else { return }
         let params = Api.Home.DurationParams(part: "contentDetails", key: App.String.apiKey, id: videos[indexPath.row].videoID)
         Api.Home.getVideoDuration(params: params) { [weak self] (result) in
-            guard let this = self else {
-                completion(.failure(Api.Error.invalid))
-                return
-            }
+            guard let this = self else { return }
             switch result {
             case .success(let duration):
                 this.videos[indexPath.row].duration = duration

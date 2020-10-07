@@ -13,7 +13,7 @@ protocol HomeCellDelegate: class {
     func cell(_ cell: HomeCell, needsPerform action: HomeCell.Action)
 }
 
-final class HomeCell: UITableViewCell {
+final class HomeCell: TableCell {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var videoTitleLabel: Label!
@@ -28,68 +28,71 @@ final class HomeCell: UITableViewCell {
     // MARK: - Peroperties
     var viewModel: HomeCellViewModel = HomeCellViewModel() {
         didSet {
-            updateUI()
+            updateView()
         }
     }
     weak var delegate: HomeCellDelegate?
-    var indexPath: IndexPath?
 
     // MARK: - Override functions
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
+        configView()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        channelImageView.image = nil
+        videoImageView.image = nil
     }
 
     // MARK: - Private functions
-    private func setupUI() {
+    private func configView() {
         durationTimeView.layer.cornerRadius = 10
         videoImageView.layer.cornerRadius = 20
         channelImageView.layer.cornerRadius = channelImageView.frame.height / 2
         subcribeButton.layer.cornerRadius = subcribeButton.frame.height / 2
     }
 
-    private func updateUI() {
+    private func updateView() {
         guard let video = viewModel.video, let url = URL(string: video.imageURL) else { return }
         videoImageView.sd_setImage(with: url)
         videoTitleLabel.text = video.title
         channelTitleLabel.text = video.channel?.title
         datePublishLabel.text = video.createdTime
-        if let duration = viewModel.duration {
-            durationTimeLabel.text = duration.getFormattedDuration()
+        if video.duration.isNotEmpty {
+            durationTimeLabel.text = video.duration.getFormattedDuration()
         } else {
             durationTimeLabel.text = nil
-            delegate?.cell(self, needsPerform: .getDuration(indexPath: indexPath))
+            delegate?.cell(self, needsPerform: .getVideoDuration(indexPath: viewModel.indexPath))
         }
-        guard let urlChannel = URL(string: viewModel.imageChannelURL) else { return }
+        guard let urlChannel = URL(string: video.imageChannelURL) else { return }
         channelImageView.sd_setImage(with: urlChannel)
     }
 
     // MARK: - Functions
-    func getImageChannel() {
-        viewModel.loadImageChannel { [weak self] (result) in
+    func getChannelImage() {
+        viewModel.getChannelImage { [weak self] (result) in
             guard let this = self else { return }
             switch result {
             case .success:
-                guard let urlChannel = URL(string: this.viewModel.imageChannelURL) else { return }
+                guard let video = this.viewModel.video, let urlChannel = URL(string: video.imageChannelURL) else { return }
                 if let video = this.viewModel.video {
-                    this.delegate?.cell(this, needsPerform: .callApiSuccess(video: video))
+                    this.delegate?.cell(this, needsPerform: .getChannelImageSuccess(video: video))
                 }
                 this.channelImageView.sd_setImage(with: urlChannel)
-            case .failure:
-                break
+            case .failure: break
             }
         }
     }
 
     // MARK: - IBActions
     @IBAction private func subscriptionButtonTouchUpInside(_ sender: Button) {
-        print("sub")
     }
 }
 
 extension HomeCell {
     enum Action {
-        case callApiSuccess(video: Video)
-        case getDuration(indexPath: IndexPath?)
+        case getChannelImageSuccess(video: Video)
+        case getVideoDuration(indexPath: IndexPath?)
     }
 }

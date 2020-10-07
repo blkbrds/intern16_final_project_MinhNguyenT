@@ -9,23 +9,23 @@
 import UIKit
 import SDWebImage
 
-final class NaviController: UIView {
+final class NavigationBarView: UIView {
 
     // MARK: - @IBOutlets
-    @IBOutlet private weak var searchImage: ImageView!
-    @IBOutlet private weak var profilImage: ImageView!
+    @IBOutlet private weak var searchView: UIView!
+    @IBOutlet private weak var profileImageView: ImageView!
 
     // MARK: - Override functions
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
+        configView()
     }
 
     // MARK: - Private functions
-    private func setupUI() {
-        searchImage.layer.cornerRadius = searchImage.frame.height / 2
-        profilImage.layer.cornerRadius = profilImage.frame.height / 2
+    private func configView() {
+        searchView.layer.cornerRadius = searchView.frame.height / 2
+        profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         guard let profileURL = URL(string: Session.shared.userImageURL) else { return }
-        profilImage.sd_setImage(with: profileURL)
+        profileImageView.sd_setImage(with: profileURL)
     }
 }

@@ -74,13 +74,13 @@ extension Api.Home {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject, let result = Mapper<Result>().map(JSON: json) else {
                         completion(.failure(Api.Error.json))
                         return }
                     completion(.success(result))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
@@ -92,13 +92,13 @@ extension Api.Home {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject, let items = json["items"] as? JSArray, let channel = Mapper<Channel>().mapArray(JSONArray: items).first else {
                         completion(.failure(Api.Error.json))
                         return }
                     completion(.success(channel))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
@@ -110,8 +110,6 @@ extension Api.Home {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject,
                         let items = json["items"] as? JSArray,
@@ -123,6 +121,8 @@ extension Api.Home {
                             return
                     }
                     completion(.success(duration))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
