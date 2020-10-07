@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Video: Mappable {
+final class Video: Mappable {
     var videoID: String = ""
     var imageURL: String = ""
     var title: String = ""
@@ -19,9 +19,10 @@ class Video: Mappable {
     var dislikeCount: String = ""
     var comments: [Comment] = []
     var commentCount: String = ""
-    var duration: String?
+    var duration: String = ""
     var createdTime: String = ""
-    var isLoadApiCompleted: Bool = false
+    var isLoadImageChannelCompleted: Bool = false
+    var imageChannelURL: String = ""
 
     required init() { }
 

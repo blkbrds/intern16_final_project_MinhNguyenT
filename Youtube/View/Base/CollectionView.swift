@@ -26,4 +26,23 @@ class CollectionView: UICollectionView {
             completion?()
         }
     }
+
+    func reloadItem(at indexPath: IndexPath) {
+        reloadItems(at: [indexPath])
+    }
+
+    override func reloadItems(at indexPaths: [IndexPath]) {
+        for indexPath in indexPaths where indexPathsForVisibleItems.contains(indexPath) {
+            super.reloadItems(at: [indexPath])
+        }
+    }
+
+    func reloadItems(inSection section: Int, moveTop: Bool) {
+        if moveTop {
+            setContentOffset(CGPoint(x: contentOffset.x, y: 0), animated: false)
+        }
+        reloadItems(at: (0..<numberOfItems(inSection: section)).map {
+            IndexPath(item: $0, section: section)
+        })
+    }
 }

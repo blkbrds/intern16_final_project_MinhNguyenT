@@ -11,22 +11,39 @@ import UIKit
 final class HomeViewController: ViewController {
 
     // MARK: - IBOulets
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var naviView: UIView!
-    private var navi: NaviController!
+    @IBOutlet private weak var tableView: TableView!
+    @IBOutlet private weak var navigationBarContainerView: UIView!
+    private var navigationBarView: NavigationBarView!
 
     // MARK: - Peroperties
     var viewModel = HomeViewModel()
-    private var tableRefreshControl = UIRefreshControl()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .black
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        return refreshControl
+    }()
 
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configTableView()
-        refreshVideo()
-        getPlaylist(isLoadMore: false)
         configNavi()
+        configTableView()
+        getPlaylist(isLoadMore: false)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshControl.endRefreshing()
+        if tableView.contentOffset.y < 0 {
+            tableView.setContentOffset(.zero, animated: false)
+        }
     }
 
     // MARK: - Private functions
@@ -35,68 +52,66 @@ final class HomeViewController: ViewController {
         tableView.register(nib, forCellReuseIdentifier: "HomeCell")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.addSubview(refreshControl)
     }
 
     private func configNavi() {
-        if navi == nil {
-            guard let navi = Bundle.main.loadNibNamed("NaviController", owner: self, options: nil)?.first as? NaviController else { return }
-            navi.frame = CGRect(x: 0, y: 0, width: naviView.frame.width, height: naviView.frame.height)
-            navi.backgroundColor = .clear
-            self.navi = navi
-            naviView.addSubview(self.navi)
+        if navigationBarView == nil {
+            guard let navigationBarView = Bundle.main.loadNibNamed("NavigationBarView", owner: self, options: nil)?.first as? NavigationBarView else { return }
+            navigationBarView.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: App.LayoutGuide.navigationBarHeight)
+            navigationBarView.backgroundColor = .clear
+            self.navigationBarView = navigationBarView
+            navigationBarContainerView.addSubview(self.navigationBarView)
         }
     }
 
-    private func refreshVideo() {
-        tableRefreshControl.tintColor = .black
-        let tableViewAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        tableRefreshControl.attributedTitle = NSAttributedString(string: "", attributes: tableViewAttributes)
-        tableRefreshControl.addTarget(self, action: #selector(tableViewDidScroll), for: .valueChanged)
-        tableView.addSubview(tableRefreshControl)
-    }
-
     private func getPlaylist(isLoadMore: Bool) {
-        viewModel.loadApiForVideos(isLoadMore: isLoadMore) { [weak self] (result) in
+        viewModel.getPlayLists(isLoadMore: isLoadMore) { [weak self] (result) in
             guard let this = self else { return }
+            this.refreshControl.endRefreshing()
+            this.viewModel.isLoading = false
             switch result {
             case .success:
-                this.updateUI()
-                for cell in this.tableView.visibleCells {
-                    if let cell = cell as? HomeCell {
-                        cell.getImageChannel()
-                    }
+                this.tableView.reloadData(moveTop: false) {
+                    this.getChannelInfo()
                 }
             case .failure(let error):
                 this.showErrorAlert(error: error)
             }
-            this.viewModel.isLoading = false
         }
     }
 
-    private func updateUI() {
-        tableView.reloadData()
-        tableRefreshControl.endRefreshing()
+    private func getChannelInfo() {
+        for cell in tableView.visibleCells {
+            if let cell = cell as? HomeCell {
+                cell.getChannelImage()
+            }
+        }
     }
 
     // MARK: - Objc functions
-    @objc private func tableViewDidScroll() {
+    @objc private func handleRefresh() {
         getPlaylist(isLoadMore: false)
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.videos.count
+        return viewModel.numberOfItems(inSection: section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell else { return UITableViewCell() }
-        cell.indexPath = indexPath
         cell.delegate = self
-        cell.viewModel = viewModel.viewModelForItem(atIndexPath: indexPath)
+        cell.viewModel = viewModel.viewModelForItem(at: indexPath)
         return cell
     }
+}
+
+// MARK: -
+extension HomeViewController: UIScrollViewDelegate {
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
@@ -105,11 +120,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             getPlaylist(isLoadMore: true)
         }
         if !decelerate {
-            for cell in tableView.visibleCells {
-                if let cell = cell as? HomeCell {
-                    cell.getImageChannel()
-                }
-            }
+            getChannelInfo()
         }
     }
 
@@ -119,11 +130,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if offsetY >= contentHeight - scrollView.frame.size.height {
             getPlaylist(isLoadMore: true)
         }
-        for cell in tableView.visibleCells {
-            if let cell = cell as? HomeCell {
-                cell.getImageChannel()
-            }
-        }
+        getChannelInfo()
     }
 }
 
@@ -131,19 +138,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 extension HomeViewController: HomeCellDelegate {
     func cell(_ cell: HomeCell, needsPerform action: HomeCell.Action) {
         switch action {
-        case .callApiSuccess(video: let video):
-            viewModel.updateImageChannel(video: video)
-        case .getDuration(indexPath: let indexPath):
+        case .getChannelImageSuccess(video: let video):
+            viewModel.updateVideo(video: video)
+        case .getVideoDuration(indexPath: let indexPath):
             if let indexPath = indexPath {
-                viewModel.loadApiVideoDuration(at: indexPath) { [weak self] (result) in
+                viewModel.getVideoDuration(at: indexPath) { [weak self] (result) in
                     guard let this = self else { return }
                     switch result {
                     case .success:
                         if this.tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
                             this.tableView.reloadRows(at: [indexPath], with: .none)
                         }
-                    case .failure:
-                        break
+                    case .failure: break
                     }
                 }
             }

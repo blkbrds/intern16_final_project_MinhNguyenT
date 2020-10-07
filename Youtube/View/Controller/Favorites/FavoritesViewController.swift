@@ -1,5 +1,5 @@
 //
-//  SubscriptionViewController.swift
+//  FavoritesViewController.swift
 //  Youtube
 //
 //  Created by MacBook Pro on 9/28/20.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SubscriptionViewController: UIViewController {
+final class FavoritesViewController: ViewController {
 
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
