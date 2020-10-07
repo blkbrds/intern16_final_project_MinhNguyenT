@@ -22,6 +22,8 @@ def app_pods
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
+# DowloadImage
+pod 'SDWebImage', '~> 5.0'
 end
 
 target 'Youtube' do

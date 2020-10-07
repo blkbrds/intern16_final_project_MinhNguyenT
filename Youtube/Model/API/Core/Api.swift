@@ -12,10 +12,27 @@ import Alamofire
 final class Api {
 
     struct Path {
-        static let baseURL = "https://"
+        static let baseURL = "https://www.googleapis.com/youtube/v3"
     }
+
+    struct Home { }
 }
 
+extension Api.Path {
+    struct Home {
+        static var path: String {
+            return baseURL / "search"
+        }
+
+        static var videoDuration: String {
+            return baseURL / "videos"
+        }
+
+        static var imageChannel: String {
+            return baseURL / "channels"
+        }
+    }
+}
 protocol URLStringConvertible {
     var urlString: String { get }
 }

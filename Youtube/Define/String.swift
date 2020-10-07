@@ -14,7 +14,12 @@ extension App {
      Please localize defined strings in `Resources/Localizable.strings`.
      */
 
-    struct String { }
+    struct String {
+        static let apiKey = "AIzaSyDqqAH9z5pvN0UnysqaT5LbA_JWiuQ8wI4"
+        static let dateFormatYYYYMMDDHHmmss = "yyyy-MM-dd HH:mm:ss"
+        //"AIzaSyDqqAH9z5pvN0UnysqaT5LbA_JWiuQ8wI4"
+        static let apiKey2 = "AIzaSyAr51_Fv9ZfDprV2PutbgzdkMTl1XUFqgU"
+    }
 }
 
 extension App.String { }

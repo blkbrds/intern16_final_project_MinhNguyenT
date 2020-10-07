@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             window?.rootViewController = LoginViewController()
         case .tabbar:
             Session.shared.isLogin = true
-            window?.rootViewController = HomeViewController()
+            window?.rootViewController = TabbarViewController()
         }
     }
 }
