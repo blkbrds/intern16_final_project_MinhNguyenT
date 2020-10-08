@@ -14,5 +14,6 @@ extension App {
         static let userEmail = "userEmail"
         static let userName = "userName"
         static let userImageURL = "userImageURL"
+        static let accessToken = "accessToken"
     }
 }

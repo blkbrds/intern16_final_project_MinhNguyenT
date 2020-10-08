@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     private func configGIDSignIn() {
         GIDSignIn.sharedInstance()?.clientID = ClientID.clientID
+        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/youtube.force-ssl")
         GIDSignIn.sharedInstance()?.delegate = self
     }
 
@@ -84,7 +85,8 @@ extension AppDelegate {
                 self.setRoot(rootType: .login)
             })
         } else {
-            Session.shared.saveLoginInfo(userID: user.userID, userEmail: user.profile.email, userName: user.profile.name)
+            guard let authentication = user.authentication else { return }
+            Session.shared.saveLoginInfo(userID: user.userID, userEmail: user.profile.email, userName: user.profile.name, accessToken: authentication.accessToken)
             if let imageURL = signIn.currentUser.profile.imageURL(withDimension: 150), user.profile.hasImage {
                 Session.shared.userImageURL = imageURL.absoluteString
             }

@@ -14,6 +14,9 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     // MARK: - IBOutlets
     @IBOutlet private weak var videoView: WKYTPlayerView!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var commentView: UIView!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var commentBottomConstrain: NSLayoutConstraint!
 
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -21,6 +24,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         setUpUI()
         updateUI()
         configBackButton()
+        registerObservers()
         fetchDataDetail()
     }
 
@@ -40,6 +44,29 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     var viewModel = DetailViewModel()
 
     // MARK: - Private functions
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillAppear(notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            commentBottomConstrain.constant = -keyboardHeight + 24
+            UIView.animate(withDuration: 0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        commentBottomConstrain.constant = 0
+        UIView.animate(withDuration: 0) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
     private func configBackButton() {
         let backButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "previous"), style: .plain, target: self, action: #selector(backButtonTouchUpInside))
         backButtonItem.tintColor = #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1)
@@ -110,6 +137,23 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.videoView.playVideo()
         }
+    }
+
+    private func clearComment() {
+        textView.text = ""
+    }
+
+    @IBAction func sendCommentButtonTouchUpinside(_ sender: UIButton) {
+        viewModel.postComment(commentText: textView.text) { (result) in
+            switch result {
+            case .success:
+                print("ok")
+            case .failure(let error):
+                print(error)
+            }
+        }
+        view.endEditing(true)
+        clearComment()
     }
 
     // MARK: - Objc functions

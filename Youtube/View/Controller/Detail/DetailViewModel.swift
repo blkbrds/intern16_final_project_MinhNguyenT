@@ -126,6 +126,18 @@ final class DetailViewModel {
             }
         }
     }
+
+    func postComment(commentText: String, completion: @escaping APICompletion) {
+        let params = Api.Comment.AllParams(snippet: "snippet", channelId: video.channel?.id ?? "", videoId: video.videoID, textOriginal: commentText, key: App.String.apiKey)
+        Api.Comment.postComments(params: params) { (result) in
+            switch result {
+            case .success:
+                completion(.success)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 extension DetailViewModel {

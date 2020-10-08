@@ -32,7 +32,7 @@ final class HomeCell: TableCell {
         }
     }
     weak var delegate: HomeCellDelegate?
-
+    var indexPath: IndexPath?
     // MARK: - Override functions
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,8 +62,7 @@ final class HomeCell: TableCell {
         if video.duration.isNotEmpty {
             durationTimeLabel.text = video.duration.getFormattedDuration()
         } else {
-            durationTimeLabel.text = nil
-            delegate?.cell(self, needsPerform: .getVideoDuration(indexPath: viewModel.indexPath))
+            delegate?.cell(self, needsPerform: .getVideoDuration(indexPath: indexPath))
         }
         guard let urlChannel = URL(string: video.imageChannelURL) else { return }
         channelImageView.sd_setImage(with: urlChannel)
