@@ -24,6 +24,10 @@ final class HomeViewModel: ViewModel {
         return HomeCellViewModel(video: videos[indexPath.row], indexPath: indexPath)
     }
 
+    func viewModelForDetail(at indexPath: IndexPath) -> DetailViewModel {
+        return DetailViewModel(video: videos[indexPath.row])
+    }
+
     func updateVideo(video: Video) {
         for (index, video) in videos.enumerated() where video.videoID == video.videoID {
             videos[index] = video

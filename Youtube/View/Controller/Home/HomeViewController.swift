@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 final class HomeViewController: ViewController {
 
@@ -66,7 +67,9 @@ final class HomeViewController: ViewController {
     }
 
     private func getPlaylist(isLoadMore: Bool) {
+        SVProgressHUD.show()
         viewModel.getPlayLists(isLoadMore: isLoadMore) { [weak self] (result) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             this.refreshControl.endRefreshing()
             this.viewModel.isLoading = false
@@ -105,6 +108,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell else { return UITableViewCell() }
         cell.delegate = self
+        cell.indexPath = indexPath
         cell.viewModel = viewModel.viewModelForItem(at: indexPath)
         return cell
     }
@@ -112,6 +116,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: -
 extension HomeViewController: UIScrollViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.viewModel = viewModel.viewModelForDetail(at: indexPath)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y

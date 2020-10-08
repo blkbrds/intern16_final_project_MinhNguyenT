@@ -22,5 +22,7 @@ struct App {
 }
 
 struct ClientID {
-    static let clientID = "228058490948-sg35mpbqq3gckmd83nn9h681olod8rkf.apps.googleusercontent.com"
+    static let clientID = "343964747899-a6t2nto2hgbdqopf9fso6mmna4iptv0v.apps.googleusercontent.com"
+    //903459574442-rrfuhm4fjvan4qd3vucdp5k536clbha0.apps.googleusercontent.com"
+    //11133905231-2h6lcm5332hsbhbm29af0ncprklojmnj.apps.googleusercontent.com"
 }

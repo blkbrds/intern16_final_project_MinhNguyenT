@@ -124,6 +124,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.2.0)
   - SwifterSwift/UIKit (5.2.0)
   - SwiftLint (0.40.2)
+  - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
   - Alamofire (= 4.9.1)
@@ -138,6 +139,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwifterSwift
   - SwiftLint
+  - YoutubePlayer-in-WKWebView
 
 SPEC REPOS:
   trunk:
@@ -166,6 +168,7 @@ SPEC REPOS:
     - SVProgressHUD
     - SwifterSwift
     - SwiftLint
+    - YoutubePlayer-in-WKWebView
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -193,7 +196,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
   SwiftLint: 1216c910d27c2633ade33b4f071bb6b930982e62
+  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 84a8ecfd43cc1652be2d8a429043e00a28bf6dbe
+PODFILE CHECKSUM: 04a9528f96ddfa29bcfa6d6ae5c0dad8f51a284e
 
 COCOAPODS: 1.9.3

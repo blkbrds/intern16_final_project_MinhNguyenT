@@ -13,7 +13,6 @@ final class NavigationBarView: UIView {
 
     // MARK: - @IBOutlets
     @IBOutlet private weak var searchView: UIView!
-    @IBOutlet private weak var searchImageView: ImageView!
     @IBOutlet private weak var profileImageView: ImageView!
 
     // MARK: - Override functions

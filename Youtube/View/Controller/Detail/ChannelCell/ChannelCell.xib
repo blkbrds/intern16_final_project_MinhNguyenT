@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="ChannelCell" customModule="Youtube" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="333" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="333" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1se-Dt-PFk" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="15" y="15" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="k8d-vX-dZk"/>
+                            <constraint firstAttribute="width" secondItem="1se-Dt-PFk" secondAttribute="height" multiplier="1:1" id="u5p-nx-vYy"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="i0A-YC-ytJ">
+                        <rect key="frame" x="85" y="17" width="198" height="46"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Labelsdcccccccccccc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="BJq-R6-9Y7" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="198" height="20.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdfadsdsas" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GkT-gb-h6s" customClass="Label" customModule="Youtube" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="25.5" width="198" height="20.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWZ-Oa-nuy" customClass="Button" customModule="Youtube" customModuleProvider="target">
+                        <rect key="frame" x="293" y="29" width="30" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="dCA-dE-REV"/>
+                        </constraints>
+                        <color key="tintColor" red="0.78967267269999997" green="0.18600156900000001" blue="0.1450458765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" image="bell" catalog="system"/>
+                        <connections>
+                            <action selector="scribeButtonTouchUpInside:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RrP-q3-fLp"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="1se-Dt-PFk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="6pr-hk-sNg"/>
+                    <constraint firstItem="1se-Dt-PFk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="EQc-ow-2tv"/>
+                    <constraint firstItem="i0A-YC-ytJ" firstAttribute="centerY" secondItem="1se-Dt-PFk" secondAttribute="centerY" id="awP-cH-luW"/>
+                    <constraint firstAttribute="trailing" secondItem="xWZ-Oa-nuy" secondAttribute="trailing" constant="10" id="hqi-KO-DIF"/>
+                    <constraint firstItem="i0A-YC-ytJ" firstAttribute="leading" secondItem="1se-Dt-PFk" secondAttribute="trailing" constant="20" id="n2e-15-JMC"/>
+                    <constraint firstItem="xWZ-Oa-nuy" firstAttribute="centerY" secondItem="1se-Dt-PFk" secondAttribute="centerY" id="nGU-Js-tgr"/>
+                    <constraint firstItem="xWZ-Oa-nuy" firstAttribute="leading" secondItem="i0A-YC-ytJ" secondAttribute="trailing" constant="10" id="w4p-hY-xWu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="channelImage" destination="1se-Dt-PFk" id="olH-mz-uWq"/>
+                <outlet property="channelTitleLabel" destination="BJq-R6-9Y7" id="FjL-Cb-Hxo"/>
+                <outlet property="scribeButton" destination="xWZ-Oa-nuy" id="s1d-gd-MGc"/>
+                <outlet property="subscribeCountLabel" destination="GkT-gb-h6s" id="GlX-Uu-1XX"/>
+            </connections>
+            <point key="canvasLocation" x="147.10144927536234" y="109.82142857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bell" catalog="system" width="128" height="124"/>
+    </resources>
+</document>
