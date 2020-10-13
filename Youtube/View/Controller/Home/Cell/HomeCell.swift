@@ -59,6 +59,7 @@ final class HomeCell: TableCell {
         videoTitleLabel.text = video.title
         channelTitleLabel.text = video.channel?.title
         datePublishLabel.text = video.createdTime
+        subcribeButton.isSelected = video.isFavorite
         if video.duration.isNotEmpty {
             durationTimeLabel.text = video.duration.getFormattedDuration()
         } else {
@@ -86,6 +87,7 @@ final class HomeCell: TableCell {
 
     // MARK: - IBActions
     @IBAction private func subscriptionButtonTouchUpInside(_ sender: Button) {
+        delegate?.cell(self, needsPerform: .handelFavorite(isFavorite: subcribeButton.isSelected))
     }
 }
 
@@ -93,5 +95,6 @@ extension HomeCell {
     enum Action {
         case getChannelImageSuccess(video: Video)
         case getVideoDuration(indexPath: IndexPath?)
+        case handelFavorite(isFavorite: Bool)
     }
 }

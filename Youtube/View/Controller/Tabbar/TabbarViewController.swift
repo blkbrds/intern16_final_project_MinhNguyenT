@@ -32,6 +32,7 @@ final class TabbarViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configTabbar()
+        tabbarView.layer.cornerRadius = 25
     }
 
     // MARK: - Private functions

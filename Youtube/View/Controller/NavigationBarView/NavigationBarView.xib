@@ -21,13 +21,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkP-WJ-caC" userLabel="Search View">
                     <rect key="frame" x="20" y="17" width="45" height="45"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJM-aY-YWF">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJM-aY-YWF" customClass="Button" customModule="Youtube" customModuleProvider="target">
                             <rect key="frame" x="10" y="10" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="12m-Rl-vG8"/>
                                 <constraint firstAttribute="width" secondItem="HJM-aY-YWF" secondAttribute="height" id="e8I-9F-mCk"/>
                             </constraints>
                             <state key="normal" image="ic-search"/>
+                            <connections>
+                                <action selector="searchButtonTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="w3D-hg-D78"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" name="GreyColor"/>

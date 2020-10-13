@@ -18,7 +18,6 @@ extension Api.Comment {
 
         init?(map: Map) { }
         mutating func mapping(map: Map) {
-            pageToken <- map["nextPageToken"]
             comments <- map["items"]
         }
     }

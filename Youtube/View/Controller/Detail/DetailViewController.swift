@@ -26,11 +26,13 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         configBackButton()
         registerObservers()
         fetchDataDetail()
+        configFavoriteButton(isFavorite: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
+        fetchDataRealm()
         TabbarViewController.shared.hiddenTabbar()
     }
 
@@ -49,28 +51,28 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    @objc func keyboardWillAppear(notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            commentBottomConstrain.constant = -keyboardHeight + 24
-            UIView.animate(withDuration: 0) {
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(notification: Notification) {
-        commentBottomConstrain.constant = 0
-        UIView.animate(withDuration: 0) {
-            self.view.layoutIfNeeded()
-        }
-    }
-
     private func configBackButton() {
         let backButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "previous"), style: .plain, target: self, action: #selector(backButtonTouchUpInside))
         backButtonItem.tintColor = #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1)
         navigationItem.leftBarButtonItem = backButtonItem
+    }
+
+    private func configFavoriteButton(isFavorite: Bool) {
+        var color: UIColor?
+        if isFavorite {
+            color = App.Color.appColor
+        } else {
+            color = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        }
+        let favoriteButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_heart"), style: .plain, target: self, action: #selector(favoriteButtonTouchUpInside))
+        navigationItem.rightBarButtonItem = favoriteButtonItem
+        favoriteButtonItem.tintColor = color
+    }
+
+    private func fetchDataRealm() {
+        viewModel.loadFavoriteStatus { [weak self] (isFavorite) in
+            self?.configFavoriteButton(isFavorite: isFavorite)
+        }
     }
 
     private func setUpUI() {
@@ -95,6 +97,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
             switch result {
             case .success:
                 this.fetchDataChannel()
+                this.fetchDataRealm()
                 this.fetchDataCommetn(isLoadmore: false)
                 this.getPlayVIdeo()
             case .failure(let error):
@@ -143,7 +146,13 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         textView.text = ""
     }
 
-    @IBAction func sendCommentButtonTouchUpinside(_ sender: UIButton) {
+    @IBAction private func sendCommentButtonTouchUpinside(_ sender: UIButton) {
+        if textView.text == "" {
+            return
+        } else {
+            viewModel.addComment(commentText: textView.text)
+            tableView.reloadData()
+        }
         viewModel.postComment(commentText: textView.text) { (result) in
             switch result {
             case .success:
@@ -157,7 +166,38 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     }
 
     // MARK: - Objc functions
-    @objc func backButtonTouchUpInside() {
+    @objc private func keyboardWillAppear(notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            commentBottomConstrain.constant = -keyboardHeight + 24
+            UIView.animate(withDuration: 0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        commentBottomConstrain.constant = 0
+        UIView.animate(withDuration: 0) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc private func favoriteButtonTouchUpInside() {
+        viewModel.handleFavoriteVideo { [weak self] (result) in
+            guard let this = self else { return }
+            switch result {
+            case .success:
+                let isFavorite = this.viewModel.video.isFavorite
+                this.configFavoriteButton(isFavorite: isFavorite)
+            case .failure(let error):
+                this.showErrorAlert(error: error)
+            }
+        }
+    }
+
+    @objc private func backButtonTouchUpInside() {
         navigationController?.popViewController(animated: true)
     }
 }

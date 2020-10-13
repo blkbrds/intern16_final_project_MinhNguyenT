@@ -16,6 +16,14 @@ class Comment: Mappable {
     var authorName: String = ""
     var authorImageUrl: String = ""
     var commentDisplay: String = ""
+    var textOriginal: String = ""
+
+    init(authorName: String, commentDisPlay: String, authorImageUrl: String, id: String) {
+        self.id = id
+        self.authorImageUrl = authorImageUrl
+        self.authorName = authorName
+        self.commentDisplay = commentDisPlay
+    }
 
     required init() { }
 
@@ -27,5 +35,6 @@ class Comment: Mappable {
         authorName <- map["snippet.topLevelComment.snippet.authorDisplayName"]
         authorImageUrl <- map["snippet.topLevelComment.snippet.authorProfileImageUrl"]
         commentDisplay <- map["snippet.topLevelComment.snippet.textDisplay"]
+        textOriginal <- map["snippet.topLevelComment.snippet.textOriginal"]
     }
 }

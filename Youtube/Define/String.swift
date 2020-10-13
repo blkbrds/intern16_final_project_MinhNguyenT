@@ -15,10 +15,13 @@ extension App {
      */
 
     struct String {
-        static let apiKey = "AIzaSyCZ5I4XfZjpI7t09sSfjUrtDCt2nr26IP0"
+        static let apiKey = "AIzaSyAr51_Fv9ZfDprV2PutbgzdkMTl1XUFqgU"
         static let dateFormatYYYYMMDDHHmmss = "yyyy-MM-dd HH:mm:ss"
         //"AIzaSyDqqAH9z5pvN0UnysqaT5LbA_JWiuQ8wI4"
         static let apiKey2 = "AIzaSyAr51_Fv9ZfDprV2PutbgzdkMTl1XUFqgU"
+        static let wanning = "Remove all !!!"
+        static let ok = "OK"
+        static let canncel = "Cancel"
     }
 }
 

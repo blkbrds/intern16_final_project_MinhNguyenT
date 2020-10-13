@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 final class DetailViewModel {
 
@@ -127,6 +128,11 @@ final class DetailViewModel {
         }
     }
 
+    func addComment(commentText: String) {
+        let comment: Comment = Comment(authorName: Session.shared.userName, commentDisPlay: commentText, authorImageUrl: Session.shared.userImageURL, id: "TM")
+        video.comments.insert(comment, at: 0)
+    }
+
     func postComment(commentText: String, completion: @escaping APICompletion) {
         let params = Api.Comment.AllParams(snippet: "snippet", channelId: video.channel?.id ?? "", videoId: video.videoID, textOriginal: commentText, key: App.String.apiKey)
         Api.Comment.postComments(params: params) { (result) in
@@ -136,6 +142,33 @@ final class DetailViewModel {
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+
+    func handleFavoriteVideo(completion: ReamlCompletion) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                video.isFavorite = !video.isFavorite
+                realm.create(Video.self, value: video, update: .modified)
+            }
+            completion(.success)
+        } catch {
+            completion(.failure(error))
+        }
+    }
+
+    func loadFavoriteStatus(completion: (Bool) -> Void) {
+        do {
+            let realm = try Realm()
+            let objects = realm.objects(Video.self).filter("videoID = %d AND isFavorite == true", video.videoID)
+            if !objects.isEmpty {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        } catch {
+            completion(false)
         }
     }
 }
