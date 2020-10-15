@@ -22,8 +22,10 @@ def app_pods
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
-# DowloadImage
-pod 'SDWebImage', '~> 5.0'
+  # DowloadImage
+  pod 'SDWebImage', '~> 5.0'
+  # Player
+  pod 'YoutubePlayer-in-WKWebView'
 end
 
 target 'Youtube' do

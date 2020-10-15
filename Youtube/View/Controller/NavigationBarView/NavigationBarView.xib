@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -13,29 +13,25 @@
             <rect key="frame" x="0.0" y="0.0" width="341" height="79"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pN-DO-zsj">
-                    <rect key="frame" x="50" y="-25" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkP-WJ-caC" userLabel="Search View">
                     <rect key="frame" x="20" y="17" width="45" height="45"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-search" translatesAutoresizingMaskIntoConstraints="NO" id="TvB-iS-gbW" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
-                            <rect key="frame" x="12.5" y="12.5" width="20" height="20"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <color key="tintColor" red="0.34148316062176165" green="0.34148316062176165" blue="0.34148316062176165" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <gestureRecognizers/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJM-aY-YWF" customClass="Button" customModule="Youtube" customModuleProvider="target">
+                            <rect key="frame" x="10" y="10" width="25" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="TvB-iS-gbW" secondAttribute="height" multiplier="1:1" id="X9X-aW-eLe"/>
-                                <constraint firstAttribute="height" constant="20" id="xrC-TU-f6Q"/>
+                                <constraint firstAttribute="width" constant="25" id="12m-Rl-vG8"/>
+                                <constraint firstAttribute="width" secondItem="HJM-aY-YWF" secondAttribute="height" id="e8I-9F-mCk"/>
                             </constraints>
-                        </imageView>
+                            <state key="normal" image="ic-search"/>
+                            <connections>
+                                <action selector="searchButtonTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="w3D-hg-D78"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" name="GreyColor"/>
                     <constraints>
-                        <constraint firstItem="TvB-iS-gbW" firstAttribute="centerY" secondItem="RkP-WJ-caC" secondAttribute="centerY" id="fIR-S8-QDW"/>
-                        <constraint firstItem="TvB-iS-gbW" firstAttribute="centerX" secondItem="RkP-WJ-caC" secondAttribute="centerX" id="uzg-Yd-lKn"/>
+                        <constraint firstItem="HJM-aY-YWF" firstAttribute="centerX" secondItem="RkP-WJ-caC" secondAttribute="centerX" id="lTg-9R-AJq"/>
+                        <constraint firstItem="HJM-aY-YWF" firstAttribute="centerY" secondItem="RkP-WJ-caC" secondAttribute="centerY" id="mZf-QG-FUA"/>
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TcJ-JW-jG1" customClass="ImageView" customModule="Youtube" customModuleProvider="target">
@@ -60,7 +56,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="profileImageView" destination="TcJ-JW-jG1" id="qGr-Cg-uRX"/>
-                <outlet property="searchImageView" destination="TvB-iS-gbW" id="hsj-vv-UlE"/>
                 <outlet property="searchView" destination="RkP-WJ-caC" id="vca-Ph-SpK"/>
             </connections>
             <point key="canvasLocation" x="174.63768115942031" y="221.31696428571428"/>

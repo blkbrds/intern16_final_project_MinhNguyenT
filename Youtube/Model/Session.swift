@@ -14,10 +14,11 @@ final class Session {
 
     private init() {}
 
-    func saveLoginInfo(userID: String, userEmail: String, userName: String) {
+    func saveLoginInfo(userID: String, userEmail: String, userName: String, accessToken: String) {
         self.userID = userID
         self.userEmail = userEmail
         self.userName = userName
+        self.userAcccessToken = accessToken
     }
 
     func clearData() {
@@ -72,6 +73,15 @@ final class Session {
         }
         set {
             ud.set(newValue, forKey: App.UserDefaultKey.userImageURL)
+        }
+    }
+
+    var userAcccessToken: String {
+        get {
+            return ud.string(forKey: App.UserDefaultKey.accessToken).unwrapped(or: "")
+        }
+        set {
+            ud.set(newValue, forKey: App.UserDefaultKey.accessToken)
         }
     }
 }

@@ -7,6 +7,11 @@
 //
 
 import Foundation
+import RealmSwift
+
+protocol HomeViewModelDelegate: class {
+    func viewModel(viewModel: HomeViewModel, needsPerform action: HomeViewModel.Action)
+}
 
 final class HomeViewModel: ViewModel {
 
@@ -14,6 +19,8 @@ final class HomeViewModel: ViewModel {
     private var videos: [Video] = []
     private var nextPageToken: String = ""
     var isLoading: Bool = false
+    var notification: NotificationToken?
+    weak var delegate: HomeViewModelDelegate?
 
     // MARK: - Functions
     func numberOfItems(inSection section: Int) -> Int {
@@ -22,6 +29,10 @@ final class HomeViewModel: ViewModel {
 
     func viewModelForItem(at indexPath: IndexPath) -> HomeCellViewModel {
         return HomeCellViewModel(video: videos[indexPath.row], indexPath: indexPath)
+    }
+
+    func viewModelForDetail(at indexPath: IndexPath) -> DetailViewModel {
+        return DetailViewModel(video: videos[indexPath.row])
     }
 
     func updateVideo(video: Video) {
@@ -67,5 +78,77 @@ final class HomeViewModel: ViewModel {
                 completion(.failure(error))
             }
         }
+    }
+
+    // MARK: - Realm
+    func handleFavoriteVideo(at index: Int, completion: ReamlCompletion) {
+        do {
+            let realm = try Realm()
+            let video = videos[index]
+            try realm.write {
+                video.isFavorite = !video.isFavorite
+                realm.create(Video.self, value: video, update: .modified)
+            }
+            completion(.success)
+        } catch {
+            completion(.failure(error))
+        }
+    }
+
+    func handleUnfavorite(at index: Int, completion: ReamlCompletion) {
+        do {
+            let realm = try Realm()
+            let video = videos[index]
+            if let object = realm.object(ofType: Video.self, forPrimaryKey: video.videoID) {
+                try realm.write {
+                    realm.delete(object)
+                }
+                completion(.success)
+            }
+        } catch {
+            completion(.failure(error))
+        }
+    }
+
+    func setupObserver() {
+        do {
+            let realm = try Realm()
+            notification = realm.objects(Video.self).observe({ [weak self] changes in
+                guard let this = self else { return }
+                switch changes {
+                case .update(let videos, _, _, _):
+                    for item in this.videos {
+                        if videos.contains(where: { $0.videoID == item.videoID }) {
+                            item.isFavorite = true
+                        } else {
+                            item.isFavorite = false
+                        }
+                    }
+                    this.delegate?.viewModel(viewModel: this, needsPerform: .reloadData)
+                default: break
+                }
+            })
+        } catch { }
+    }
+
+    func fetchRealmData(completion: @escaping APICompletion) {
+      do {
+        let realm = try Realm()
+        let results = Array(realm.objects(Video.self))
+        for item in videos {
+          if results.contains(where: { $0.videoID == item.videoID }) {
+            item.isFavorite = true
+          }
+        }
+        completion(.success)
+      } catch {
+        completion(.failure(error))
+      }
+    }
+}
+
+extension HomeViewModel {
+    enum Action {
+        case reloadData
     }
 }
