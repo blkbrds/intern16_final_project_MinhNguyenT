@@ -18,6 +18,7 @@ import RealmSwift
     var viewCount: String = ""
     var likeCount: String = ""
     var dislikeCount: String = ""
+    var comment: Comment?
     var comments: [Comment] = []
     var commentCount: String = ""
     dynamic var duration: String = ""

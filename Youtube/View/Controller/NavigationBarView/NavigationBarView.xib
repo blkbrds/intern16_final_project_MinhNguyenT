@@ -13,11 +13,6 @@
             <rect key="frame" x="0.0" y="0.0" width="341" height="79"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pN-DO-zsj">
-                    <rect key="frame" x="50" y="-25" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkP-WJ-caC" userLabel="Search View">
                     <rect key="frame" x="20" y="17" width="45" height="45"/>
                     <subviews>

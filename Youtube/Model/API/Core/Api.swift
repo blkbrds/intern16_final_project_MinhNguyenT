@@ -51,6 +51,10 @@ extension Api.Path {
         static var videoChannel: String {
             return baseURL / "channels"
         }
+
+        static var reply: String {
+            return baseURL / "comments"
+        }
     }
 
     struct Comment {

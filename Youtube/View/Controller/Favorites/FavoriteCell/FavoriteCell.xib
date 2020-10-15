@@ -12,14 +12,14 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="117" id="KGk-i7-Jjw" customClass="FavoriteCell" customModule="Youtube" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="345" height="117"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="345" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rje-Mr-2Ud">
                         <rect key="frame" x="8" y="8" width="150" height="85"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="85" id="Jtb-7j-VMv"/>
+                            <constraint firstAttribute="height" constant="85" id="K1Y-eK-ajo"/>
                             <constraint firstAttribute="width" constant="150" id="y3f-nw-Oib"/>
                         </constraints>
                     </imageView>
@@ -58,14 +58,14 @@
                     <constraint firstItem="tmb-pb-xmB" firstAttribute="trailing" secondItem="d6B-Sh-YYm" secondAttribute="trailing" id="8gV-jc-Phs"/>
                     <constraint firstItem="rje-Mr-2Ud" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="JNc-Qv-32e"/>
                     <constraint firstItem="d6B-Sh-YYm" firstAttribute="leading" secondItem="rje-Mr-2Ud" secondAttribute="trailing" constant="15" id="VZM-3u-DzE"/>
-                    <constraint firstAttribute="bottom" secondItem="rje-Mr-2Ud" secondAttribute="bottom" constant="8" id="a2T-En-HtA"/>
                     <constraint firstItem="tmb-pb-xmB" firstAttribute="leading" secondItem="d6B-Sh-YYm" secondAttribute="leading" id="bu2-cZ-c1X"/>
+                    <constraint firstAttribute="bottom" secondItem="tmb-pb-xmB" secondAttribute="bottom" constant="19.5" id="buV-VL-HEz"/>
                     <constraint firstAttribute="trailing" secondItem="d6B-Sh-YYm" secondAttribute="trailing" constant="10" id="gSs-wj-deL"/>
                     <constraint firstItem="tmb-pb-xmB" firstAttribute="top" secondItem="d6B-Sh-YYm" secondAttribute="bottom" constant="15" id="hAY-TL-m0t"/>
                     <constraint firstItem="d6B-Sh-YYm" firstAttribute="top" secondItem="rje-Mr-2Ud" secondAttribute="top" id="oI8-bj-LDc"/>
                     <constraint firstItem="rje-Mr-2Ud" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="rsH-vc-2Be"/>
-                    <constraint firstItem="SkX-7A-eoo" firstAttribute="bottom" secondItem="rje-Mr-2Ud" secondAttribute="bottom" constant="-8" id="skL-oA-3ua"/>
-                    <constraint firstItem="SkX-7A-eoo" firstAttribute="trailing" secondItem="rje-Mr-2Ud" secondAttribute="trailing" constant="-8" id="uF2-xV-pWz"/>
+                    <constraint firstItem="rje-Mr-2Ud" firstAttribute="bottom" secondItem="SkX-7A-eoo" secondAttribute="bottom" constant="8" id="skL-oA-3ua"/>
+                    <constraint firstItem="rje-Mr-2Ud" firstAttribute="trailing" secondItem="SkX-7A-eoo" secondAttribute="trailing" constant="8" id="uF2-xV-pWz"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

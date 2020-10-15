@@ -32,9 +32,9 @@ final class CommentCell: UITableViewCell {
     }
 
     func updateUI() {
-        guard let comment = viewModel.userComment, let url = URL(string: comment.authorImageUrl) else { return }
+        guard let replies = viewModel.userReplies, let url = URL(string: replies.authorImageUrl) else { return }
         profileUserImgae.sd_setImage(with: url)
-        nameUserLabel.text = comment.authorName
-        commentUser.text = comment.commentDisplay
+        nameUserLabel.text = replies.authorName
+        commentUser.text = replies.textOriginal
     }
 }

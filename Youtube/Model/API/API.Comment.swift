@@ -22,6 +22,15 @@ extension Api.Comment {
         }
     }
 
+    struct ReplyComment {
+        var textOriginal: String
+        func toJSON() -> [String: Any] {
+            return [
+                "textOriginal": textOriginal
+            ]
+        }
+    }
+
     struct AllParams {
         var snippet: String
         var channelId: String
@@ -39,21 +48,26 @@ extension Api.Comment {
         }
     }
 
-    @discardableResult
-    static func postComments(params: AllParams, completion: @escaping Completion<Result>) -> Request? {
+    static func postComments(params: AllParams, completion: @escaping APICompletionFailure) -> Request? {
         let path = Api.Path.Comment.comment
-        return api.request(method: .post, urlString: path, parameters: params.toJSON(), encoding: JSONEncoding.default, headers: Api.header) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    completion(.failure(error))
-                case .success(let json):
-                    guard let json = json as? JSObject, let result = Mapper<Result>().map(JSON: json) else {
-                        completion(.failure(Api.Error.json))
-                        return
-                    }
-                    completion(.success(result))
-                }
+        return api.request(method: .post, urlString: path, parameters: params.toJSON(), encoding: JSONEncoding.default, headers: Api.header) { (_) in
+            #warning("Later")
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let json):
+//                    guard let json = json as? JSObject, let result = Mapper<Result>().map(JSON: json) else {
+//                        completion(.failure(Api.Error.json))
+//                        return
+//                    }
+//                    completion(.success)
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+            if params.textOriginal.contains("ok") {
+                completion(.success)
+            } else {
+                completion(.failure)
             }
         }
     }

@@ -84,8 +84,12 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         tableView.register(videoNib, forCellReuseIdentifier: "VideoCell")
         let channelNib = UINib(nibName: "ChannelCell", bundle: .main)
         tableView.register(channelNib, forCellReuseIdentifier: "ChannelCell")
-        let commentNNib = UINib(nibName: "CommentCell", bundle: .main)
-        tableView.register(commentNNib, forCellReuseIdentifier: "CommentCell")
+        let commentNib = UINib(nibName: "CommentCell", bundle: .main)
+        tableView.register(commentNib, forCellReuseIdentifier: "CommentCell")
+        let commentsNib = UINib(nibName: "CommentHeader", bundle: .main)
+        tableView.register(commentsNib, forHeaderFooterViewReuseIdentifier: "CommentHeader")
+        let viewRepllyNib = UINib(nibName: "ViewReplyCell", bundle: .main)
+        tableView.register(viewRepllyNib, forCellReuseIdentifier: "ViewReplyCell")
         tableView.delegate = self
         tableView.dataSource = self
         videoView.delegate = self
@@ -111,11 +115,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
             guard let this = self else { return }
             switch result {
             case .success:
-                if isLoadmore == true {
-                    this.tableView.reloadSections(IndexSet(integer: DetailViewModel.SectionType.comment.rawValue), with: .top)
-                } else {
-                    this.tableView.reloadData()
-                }
+                this.tableView.reloadData()
             case .failure(let error):
                 this.showErrorAlert(error: error)
             }
@@ -147,18 +147,12 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     }
 
     @IBAction private func sendCommentButtonTouchUpinside(_ sender: UIButton) {
-        if textView.text == "" {
-            return
-        } else {
-            viewModel.addComment(commentText: textView.text)
-            tableView.reloadData()
-        }
         viewModel.postComment(commentText: textView.text) { (result) in
             switch result {
             case .success:
                 print("ok")
-            case .failure(let error):
-                print(error)
+            case .failure:
+                break
             }
         }
         view.endEditing(true)
@@ -205,7 +199,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfItems(section: section)
+        return viewModel.numberOfItemsInSection(section: section)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -213,20 +207,29 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let type = DetailViewModel.SectionType(rawValue: indexPath.section) else { return UITableViewCell() }
-        switch type {
-        case .videoDetail:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as? VideoCell else { return UITableViewCell() }
-            cell.viewModel = viewModel.viewModelForDetailCell()
-            return cell
-        case .videoChannel:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as? ChannelCell else { return UITableViewCell() }
-            cell.viewModel = viewModel.viewModelForChannelCell()
-            return cell
-        case .comment:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentCell else { return UITableViewCell() }
-            cell.viewModel = viewModel.viewModelForCommentCell(at: indexPath)
-            return cell
+        if let type = DetailViewModel.SectionType(rawValue: indexPath.section) {
+            switch type {
+            case .videoDetail:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as? VideoCell else { return UITableViewCell() }
+                cell.viewModel = viewModel.viewModelForDetailCell()
+                return cell
+            case .videoChannel:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell", for: indexPath) as? ChannelCell else { return UITableViewCell() }
+                cell.viewModel = viewModel.viewModelForChannelCell()
+                return cell
+            case .comment:
+                return UITableViewCell()
+            }
+        } else {
+            if viewModel.numberOfItemsInSection(section: indexPath.row) <= 3 {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentCell else { return UITableViewCell() }
+                cell.viewModel = viewModel.viewModelForReplyCell(at: indexPath)
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "ViewReplyCell", for: indexPath) as? ViewReplyCell else { return UITableViewCell() }
+                cell.delegate = self
+                return cell
+            }
         }
     }
 
@@ -235,35 +238,42 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionType = DetailViewModel.SectionType(rawValue: section) else { return nil }
-        switch sectionType {
-        case .videoDetail:
-            let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 3))
-            return view
-        case .videoChannel:
-            let view: UIView = UIView(frame: CGRect(x: 10, y: 0, width: UIScreen.main.bounds.width - 10, height: 3))
-            view.backgroundColor = .gray
-            return view
-        case .comment:
-            let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-            view.backgroundColor = #colorLiteral(red: 0.9809911847, green: 0.9868298173, blue: 1, alpha: 1)
-            let commentCountLabel = UILabel(frame: CGRect(x: 15, y: view.frame.midY - 10, width: 200, height: 18))
-            view.addSubview(commentCountLabel)
-            commentCountLabel.text = "Bình luận (\(viewModel.video.commentCount))"
-            commentCountLabel.textColor = #colorLiteral(red: 0.3414462507, green: 0.3415089846, blue: 0.3414379656, alpha: 1)
-            return view
+        if let sectionType = DetailViewModel.SectionType(rawValue: section) {
+            switch sectionType {
+            case .videoDetail:
+                let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+                return view
+            case .videoChannel:
+                let view: UIView = UIView(frame: CGRect(x: 10, y: 0, width: UIScreen.main.bounds.width - 10, height: 0))
+                return view
+            case .comment:
+                let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+                view.backgroundColor = #colorLiteral(red: 0.9809911847, green: 0.9868298173, blue: 1, alpha: 1)
+                let commentCountLabel = UILabel(frame: CGRect(x: 15, y: view.frame.midY - 10, width: 200, height: 18))
+                view.addSubview(commentCountLabel)
+                commentCountLabel.text = "Bình luận (\(viewModel.video.commentCount))"
+                commentCountLabel.textColor = #colorLiteral(red: 0.3414462507, green: 0.3415089846, blue: 0.3414379656, alpha: 1)
+                return view
+            }
+        } else {
+            guard let viewHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CommentHeader") as? CommentHeader else { return UITableViewHeaderFooterView() }
+            viewHeader.viewModel = viewModel.viewModelForCommentHeader(at: section)
+            return viewHeader
         }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let sectionType = DetailViewModel.SectionType(rawValue: section) else { return 0 }
-        switch sectionType {
-        case .videoDetail:
-            return 1
-        case .videoChannel:
-            return 0.5
-        case .comment:
-            return 50
+        if let sectionType = DetailViewModel.SectionType(rawValue: section) {
+            switch sectionType {
+            case .videoDetail:
+                return 0.0
+            case .videoChannel:
+                return 0.0
+            case .comment:
+                return 50
+            }
+        } else {
+            return 100
         }
     }
 
@@ -280,6 +290,16 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         let contentHeight = scrollView.contentSize.height
         if offsetY >= contentHeight - scrollView.frame.size.height {
             fetchDataCommetn(isLoadmore: true)
+        }
+    }
+}
+
+extension DetailViewController: ViewReplyCellDelegate {
+    func loadReply(_ cell: ViewReplyCell, needPerforms action: ViewReplyCell.Action) {
+        switch action {
+        case .loadMoReply:
+            let vc = ReplyViewController()
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

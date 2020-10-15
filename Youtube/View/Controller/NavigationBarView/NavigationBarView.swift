@@ -36,7 +36,7 @@ final class NavigationBarView: UIView {
     }
 
     // MARK: - IBActions
-    @IBAction func searchButtonTouchUpInside(_ sender: UIButton) {
+    @IBAction private func searchButtonTouchUpInside(_ sender: UIButton) {
         delegate?.view(self, needsPerform: .handelSearchButton)
     }
 }

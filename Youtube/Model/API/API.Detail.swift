@@ -11,6 +11,7 @@ import ObjectMapper
 import Alamofire
 
 extension Api.Detail {
+
     struct CommentParams {
         var part: String
         var videoId: String
@@ -29,16 +30,45 @@ extension Api.Detail {
         }
     }
 
-        struct Result: Mappable {
-            var pageToken: String = ""
-            var comments: [Comment] = []
+    struct ReplyParams {
+        var part: String
+        var parentId: String
+        var key: String
+        var maxResults: Int
+        var pageToken: String
 
-            init?(map: Map) { }
-            mutating func mapping(map: Map) {
-                pageToken <- map["nextPageToken"]
-                comments <- map["items"]
-            }
+        func toJSON() -> [String: Any] {
+            return [
+                "part": part,
+                "parentId": parentId,
+                "key": key,
+                "maxResults": maxResults,
+                "pageToken": pageToken
+            ]
         }
+    }
+
+    struct Result: Mappable {
+        var pageToken: String = ""
+        var comments: [Comment] = []
+
+        init?(map: Map) { }
+        mutating func mapping(map: Map) {
+            pageToken <- map["nextPageToken"]
+            comments <- map["items"]
+        }
+    }
+
+    struct ResultReply: Mappable {
+        var pageToken: String = ""
+        var replies: [Reply] = []
+
+        init?(map: Map) { }
+        mutating func mapping(map: Map) {
+            pageToken <- map["nextPageToken"]
+            replies <- map["items"]
+        }
+    }
 
     struct VideoDetailParams {
         var part: String
@@ -74,14 +104,33 @@ extension Api.Detail {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject, let result = Mapper<Result>().map(JSON: json) else {
                         completion(.failure(Api.Error.json))
                         return
                     }
                     completion(.success(result))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    @discardableResult
+    static func getReply(params: ReplyParams, completion: @escaping Completion<ResultReply>) -> Request? {
+        let path = Api.Path.Detail.reply
+        return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let json):
+                    guard let json = json as? JSObject, let result = Mapper<ResultReply>().map(JSON: json) else {
+                        completion(.failure(Api.Error.json))
+                        return
+                    }
+                    completion(.success(result))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
@@ -93,14 +142,14 @@ extension Api.Detail {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject, let items = json["items"] as? JSArray, let video = Mapper<Video>().mapArray(JSONArray: items).first else {
                         completion(.failure(Api.Error.json))
                         return }
                     video.videoID = params.id
                     completion(.success(video))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
@@ -112,14 +161,14 @@ extension Api.Detail {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject, let items = json["items"] as? JSArray else {
                         completion(.failure(Api.Error.json))
                         return }
                     let channel = Mapper<Channel>().mapArray(JSONArray: items).first
                     completion(.success(channel))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }
@@ -131,8 +180,6 @@ extension Api.Detail {
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
                 case .success(let json):
                     guard let json = json as? JSObject,
                         let items = json["items"] as? JSArray,
@@ -144,6 +191,8 @@ extension Api.Detail {
                             return
                     }
                     completion(.success(duration))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }

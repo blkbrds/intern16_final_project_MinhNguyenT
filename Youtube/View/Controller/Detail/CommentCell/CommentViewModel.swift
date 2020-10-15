@@ -10,9 +10,9 @@ import Foundation
 
 class CommentViewModel {
 
-    var userComment: Comment?
+    var userReplies: Reply?
 
-    init(comment: Comment? = nil) {
-        userComment = comment
+    init(replies: Reply? = nil) {
+        userReplies = replies
     }
 }

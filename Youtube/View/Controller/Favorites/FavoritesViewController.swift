@@ -44,7 +44,6 @@ final class FavoritesViewController: ViewController {
         fetchData()
     }
 
-    
     private func fetchData() {
         viewModel.loadData { [weak self] (result) in
             guard let this = self else { return }
