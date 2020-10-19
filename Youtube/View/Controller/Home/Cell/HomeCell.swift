@@ -32,7 +32,7 @@ final class HomeCell: TableCell {
         }
     }
     weak var delegate: HomeCellDelegate?
-
+    var indexPath: IndexPath?
     // MARK: - Override functions
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,12 +58,12 @@ final class HomeCell: TableCell {
         videoImageView.sd_setImage(with: url)
         videoTitleLabel.text = video.title
         channelTitleLabel.text = video.channel?.title
-        datePublishLabel.text = video.createdTime
+        datePublishLabel.text = video.createdTime.convertDateFormatter()
+        subcribeButton.isSelected = video.isFavorite
         if video.duration.isNotEmpty {
             durationTimeLabel.text = video.duration.getFormattedDuration()
         } else {
-            durationTimeLabel.text = nil
-            delegate?.cell(self, needsPerform: .getVideoDuration(indexPath: viewModel.indexPath))
+            delegate?.cell(self, needsPerform: .getVideoDuration(indexPath: indexPath))
         }
         guard let urlChannel = URL(string: video.imageChannelURL) else { return }
         channelImageView.sd_setImage(with: urlChannel)
@@ -87,6 +87,7 @@ final class HomeCell: TableCell {
 
     // MARK: - IBActions
     @IBAction private func subscriptionButtonTouchUpInside(_ sender: Button) {
+        delegate?.cell(self, needsPerform: .handelFavorite(isFavorite: subcribeButton.isSelected))
     }
 }
 
@@ -94,5 +95,6 @@ extension HomeCell {
     enum Action {
         case getChannelImageSuccess(video: Video)
         case getVideoDuration(indexPath: IndexPath?)
+        case handelFavorite(isFavorite: Bool)
     }
 }

@@ -12,12 +12,23 @@ import Alamofire
 typealias JSObject = [String: Any]
 typealias JSArray = [JSObject]
 
+typealias CompletionPost = (Result<Any>) -> Void
 typealias Completion<Value> = (Result<Value>) -> Void
 typealias APICompletion = (APIResult) -> Void
+typealias APICompletionFailure = (APICompletionResult) -> Void
+typealias ReamlCompletion = (RealmResult) -> Void
 
 enum APIResult {
     case success
     case failure(Error)
+}
+enum RealmResult {
+    case success
+    case failure(Error)
+}
+enum APICompletionResult {
+    case success
+    case failure
 }
 
 // MARK: - Equatable

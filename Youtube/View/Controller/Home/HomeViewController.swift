@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 final class HomeViewController: ViewController {
 
@@ -30,12 +31,15 @@ final class HomeViewController: ViewController {
         super.viewDidLoad()
         configNavi()
         configTableView()
+        viewModel.delegate = self
+        viewModel.setupObserver()
         getPlaylist(isLoadMore: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        fectchDataRealm()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,7 +70,9 @@ final class HomeViewController: ViewController {
     }
 
     private func getPlaylist(isLoadMore: Bool) {
+        SVProgressHUD.show()
         viewModel.getPlayLists(isLoadMore: isLoadMore) { [weak self] (result) in
+            SVProgressHUD.dismiss()
             guard let this = self else { return }
             this.refreshControl.endRefreshing()
             this.viewModel.isLoading = false
@@ -75,6 +81,7 @@ final class HomeViewController: ViewController {
                 this.tableView.reloadData(moveTop: false) {
                     this.getChannelInfo()
                 }
+                this.fectchDataRealm()
             case .failure(let error):
                 this.showErrorAlert(error: error)
             }
@@ -85,6 +92,17 @@ final class HomeViewController: ViewController {
         for cell in tableView.visibleCells {
             if let cell = cell as? HomeCell {
                 cell.getChannelImage()
+            }
+        }
+    }
+
+    private func fectchDataRealm() {
+        viewModel.fetchRealmData { (result) in
+            switch result {
+            case .success:
+                self.tableView.reloadData()
+            case .failure(let error):
+                self.showErrorAlert(error: error)
             }
         }
     }
@@ -105,6 +123,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell else { return UITableViewCell() }
         cell.delegate = self
+        cell.indexPath = indexPath
         cell.viewModel = viewModel.viewModelForItem(at: indexPath)
         return cell
     }
@@ -112,6 +131,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: -
 extension HomeViewController: UIScrollViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.viewModel = viewModel.viewModelForDetail(at: indexPath)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
@@ -136,6 +161,7 @@ extension HomeViewController: UIScrollViewDelegate {
 
 // MARK: - HomeCellDelegate
 extension HomeViewController: HomeCellDelegate {
+
     func cell(_ cell: HomeCell, needsPerform action: HomeCell.Action) {
         switch action {
         case .getChannelImageSuccess(video: let video):
@@ -153,6 +179,39 @@ extension HomeViewController: HomeCellDelegate {
                     }
                 }
             }
+        case .handelFavorite(isFavorite: let isFavorite):
+            guard let indexPath = tableView.indexPath(for: cell) else { return }
+            if isFavorite {
+                viewModel.handleUnfavorite(at: indexPath.row) { [weak self] (result) in
+                    guard let this = self else { return }
+                    switch result {
+                    case .success:
+                        this.tableView.reloadData()
+                    case.failure(let error):
+                        this.showErrorAlert(error: error)
+                    }
+                }
+            } else {
+                viewModel.handleFavoriteVideo(at: indexPath.row) { [weak self] (result) in
+                    guard let this = self else { return }
+                    switch result {
+                    case .success:
+                        this.tableView.reloadData()
+                    case.failure(let error):
+                        this.showErrorAlert(error: error)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - HomeViewModelDelegate
+extension HomeViewController: HomeViewModelDelegate {
+    func viewModel(viewModel: HomeViewModel, needsPerform action: HomeViewModel.Action) {
+        switch action {
+        case .reloadData:
+            tableView.reloadData()
         }
     }
 }

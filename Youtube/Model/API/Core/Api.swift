@@ -11,11 +11,17 @@ import Alamofire
 
 final class Api {
 
+    static var header: [String: String] = ["Authorization": "Bearer \(Session.shared.userAcccessToken)",
+    "Accept": "application/json",
+    "Content-Type": "application/json"]
+
     struct Path {
         static let baseURL = "https://www.googleapis.com/youtube/v3"
     }
 
     struct Home { }
+    struct Detail { }
+    struct Comment { }
 }
 
 extension Api.Path {
@@ -30,6 +36,30 @@ extension Api.Path {
 
         static var imageChannel: String {
             return baseURL / "channels"
+        }
+    }
+
+    struct Detail {
+        static var videos: String {
+            return baseURL / "videos"
+        }
+
+        static var comment: String {
+            return baseURL / "commentThreads"
+        }
+
+        static var videoChannel: String {
+            return baseURL / "channels"
+        }
+
+        static var reply: String {
+            return baseURL / "comments"
+        }
+    }
+
+    struct Comment {
+        static var comment: String {
+            return baseURL / "commentThreads"
         }
     }
 }

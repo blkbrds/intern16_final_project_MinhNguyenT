@@ -12,6 +12,7 @@ final class HomeCellViewModel {
 
     private(set) var video: Video?
     private(set) var indexPath: IndexPath?
+    var isFavorite: Bool = false
 
     init(video: Video? = nil, indexPath: IndexPath? = nil) {
         self.video = video

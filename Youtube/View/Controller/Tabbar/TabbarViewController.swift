@@ -22,8 +22,9 @@ final class TabbarViewController: ViewController {
     @IBOutlet private weak var tabbarViewHeightConstraint: NSLayoutConstraint!
 
     // MARK: - Peroperties
+    static var shared = TabbarViewController()
     private let homeVC = HomeViewController()
-    private let subscriptionVC = FavoritesViewController()
+    private let favoriteVC = FavoritesViewController()
     private var selectedIndex: Int = 0
     private var viewControllers: [UIViewController] = []
 
@@ -31,14 +32,14 @@ final class TabbarViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configTabbar()
+        tabbarView.layer.cornerRadius = 25
     }
 
     // MARK: - Private functions
-
     private func configTabbar() {
         let homeNavi = UINavigationController(rootViewController: homeVC)
-        let subNavi = UINavigationController(rootViewController: subscriptionVC)
-        viewControllers = [homeNavi, subNavi]
+        let favoriteNavi = UINavigationController(rootViewController: favoriteVC)
+        viewControllers = [homeNavi, favoriteNavi]
         tabbarItemButton[selectedIndex].isSelected = true
         tabbarItemButtonTouchUpInside(tabbarItemButton[selectedIndex])
         tabbarViewHeightConstraint.constant = App.LayoutGuide.tabBarHeight
@@ -46,12 +47,14 @@ final class TabbarViewController: ViewController {
         homeButton.layer.cornerRadius = (tabbarViewHeightConstraint.constant - 30) / 2
     }
 
-    private func commentTextViewDidTapped() {
+    func hiddenTabbar() {
         tabbarView.isHidden = true
+        tabbarViewHeightConstraint.constant = 0
     }
 
-    private func showTabbar() {
+    func showTabbar() {
         tabbarView.isHidden = false
+        tabbarViewHeightConstraint.constant = 90
     }
 
     // MARK: - @IBActions

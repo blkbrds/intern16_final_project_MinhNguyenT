@@ -8,23 +8,34 @@
 
 import Foundation
 import ObjectMapper
+import RealmSwift
 
-final class Video: Mappable {
-    var videoID: String = ""
-    var imageURL: String = ""
-    var title: String = ""
-    var channel: Channel?
+@objcMembers final class Video: Object, Mappable {
+    dynamic var videoID: String = ""
+    dynamic var imageURL: String = ""
+    dynamic var title: String = ""
+    dynamic var channel: Channel?
     var viewCount: String = ""
     var likeCount: String = ""
     var dislikeCount: String = ""
+    var comment: Comment?
     var comments: [Comment] = []
     var commentCount: String = ""
-    var duration: String = ""
+    dynamic var duration: String = ""
     var createdTime: String = ""
     var isLoadImageChannelCompleted: Bool = false
     var imageChannelURL: String = ""
+    dynamic var isFavorite: Bool = false
 
     required init() { }
+
+    init(videoId: String, imageURL: String, title: String, channelTitle: String, durationTime: String, isFavorite: Bool) {
+        self.videoID = videoId
+        self.title = title
+        self.channel?.title = channelTitle
+        self.duration = durationTime
+        self.isFavorite = isFavorite
+    }
 
     required init?(map: Map) { }
 
@@ -48,10 +59,17 @@ final class Video: Mappable {
         createdTime <- map["snippet.publishedAt"]
 
     }
-}
 
-extension Video: Equatable {
-    static func == (lhs: Video, rhs: Video) -> Bool {
-        return lhs.videoID == rhs.videoID
+    override static func primaryKey() -> String? {
+        return "videoID"
+    }
+
+    override class func ignoredProperties() -> [String] {
+        return ["comments", "viewCount", "likeCount", "dislikeCount", "commentCount", "createdTime", "isLoadImageChannelCompleted", "imageChannelURL"]
     }
 }
+//extension Video: Equatable {
+//    static func == (lhs: Video, rhs: Video) -> Bool {
+//        return lhs.videoID == rhs.videoID
+//    }
+//}
