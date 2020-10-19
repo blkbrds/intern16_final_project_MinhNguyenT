@@ -8,28 +8,16 @@
 
 import UIKit
 
-protocol ViewReplyCellDelegate: class {
-    func loadReply(_ cell: ViewReplyCell, needPerforms action: ViewReplyCell.Action)
-}
-
 final class ViewReplyCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var viewReplyButton: Button!
-    weak var delegate: ViewReplyCellDelegate?
+
+    // MARK: - Peroperties
+    var indexPath: IndexPath?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         viewReplyButton.tintColor = App.Color.appColor
-    }
-
-    // MARK: - IBActions
-    @IBAction private func viewReplyButtonTouchUpInside(_ sender: Button) {
-        delegate?.loadReply(self, needPerforms: .loadMoReply)
-    }
-}
-
-extension ViewReplyCell {
-    enum Action {
-        case loadMoReply
     }
 }

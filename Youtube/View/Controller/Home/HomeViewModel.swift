@@ -47,7 +47,7 @@ final class HomeViewModel: ViewModel {
             nextPageToken = ""
         }
         isLoading = true
-        let params = Api.Home.Params(part: "snippet", keySearch: "trending", key: App.String.apiKey, pageToken: nextPageToken)
+        let params = Api.Home.Params(part: "snippet", chart: "mostPopular", key: App.String.apiKey, regionCode: "VN", pageToken: nextPageToken)
         Api.Home.getPlaylist(params: params) { [weak self] (result) in
             guard let this = self else { return }
             switch result {

@@ -10,6 +10,7 @@ import UIKit
 
 final class CommentHeader: UITableViewHeaderFooterView {
 
+    // MARK: - IBOutlets
     @IBOutlet private weak var authorImageView: ImageView!
     @IBOutlet private weak var authorNameLabel: Label!
     @IBOutlet private weak var authorComentLable: Label!
@@ -24,7 +25,7 @@ final class CommentHeader: UITableViewHeaderFooterView {
         authorImageView.layer.cornerRadius = authorImageView.frame.height / 2
         guard let comment = viewModel?.userComment, let url = URL(string: comment.authorImageUrl) else { return }
         authorImageView.sd_setImage(with: url)
-        authorNameLabel.text = comment.authorName
+        authorNameLabel.text = "\(comment.authorName) - \(comment.publishedAt.convertDateFormatter())"
         authorComentLable.text = comment.commentDisplay
     }
 }

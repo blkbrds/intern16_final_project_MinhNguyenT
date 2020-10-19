@@ -53,7 +53,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
 
     private func configBackButton() {
         let backButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "previous"), style: .plain, target: self, action: #selector(backButtonTouchUpInside))
-        backButtonItem.tintColor = #colorLiteral(red: 0.3764705882, green: 0.3764705882, blue: 0.3764705882, alpha: 1)
+        backButtonItem.tintColor = App.Color.appColor
         navigationItem.leftBarButtonItem = backButtonItem
     }
 
@@ -102,7 +102,7 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
             case .success:
                 this.fetchDataChannel()
                 this.fetchDataRealm()
-                this.fetchDataCommetn(isLoadmore: false)
+                this.fetchDataCommetn()
                 this.getPlayVIdeo()
             case .failure(let error):
                 this.showErrorAlert(error: error)
@@ -110,8 +110,8 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
         }
     }
 
-    private func fetchDataCommetn(isLoadmore: Bool) {
-        viewModel.loadApiComment(isLoadMore: isLoadmore) { [weak self] (result) in
+    private func fetchDataCommetn() {
+        viewModel.loadApiComment() { [weak self] (result) in
             guard let this = self else { return }
             switch result {
             case .success:
@@ -147,10 +147,11 @@ final class DetailViewController: ViewController, WKYTPlayerViewDelegate {
     }
 
     @IBAction private func sendCommentButtonTouchUpinside(_ sender: UIButton) {
-        viewModel.postComment(commentText: textView.text) { (result) in
+        viewModel.postComment(commentText: textView.text) { [weak self] (result) in
+            guard let this = self else { return }
             switch result {
             case .success:
-                print("ok")
+                this.tableView.reloadData()
             case .failure:
                 break
             }
@@ -227,7 +228,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "ViewReplyCell", for: indexPath) as? ViewReplyCell else { return UITableViewCell() }
-                cell.delegate = self
                 return cell
             }
         }
@@ -241,7 +241,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         if let sectionType = DetailViewModel.SectionType(rawValue: section) {
             switch sectionType {
             case .videoDetail:
-                let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+                let view: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0))
                 return view
             case .videoChannel:
                 let view: UIView = UIView(frame: CGRect(x: 10, y: 0, width: UIScreen.main.bounds.width - 10, height: 0))
@@ -262,44 +262,24 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 3 {
+            let vc = ReplyViewController()
+            vc.viewModel = viewModel.viewModelForReplyDetail(at: indexPath)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let sectionType = DetailViewModel.SectionType(rawValue: section) {
             switch sectionType {
-            case .videoDetail:
-                return 0.0
-            case .videoChannel:
-                return 0.0
+            case .videoDetail, .videoChannel:
+                return 0
             case .comment:
                 return 50
             }
         } else {
             return 100
-        }
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY >= contentHeight - scrollView.frame.size.height {
-            fetchDataCommetn(isLoadmore: true)
-        }
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY >= contentHeight - scrollView.frame.size.height {
-            fetchDataCommetn(isLoadmore: true)
-        }
-    }
-}
-
-extension DetailViewController: ViewReplyCellDelegate {
-    func loadReply(_ cell: ViewReplyCell, needPerforms action: ViewReplyCell.Action) {
-        switch action {
-        case .loadMoReply:
-            let vc = ReplyViewController()
-            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

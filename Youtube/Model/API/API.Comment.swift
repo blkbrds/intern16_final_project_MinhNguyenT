@@ -12,62 +12,57 @@ import Alamofire
 
 extension Api.Comment {
 
-    struct Result: Mappable {
-        var pageToken: String = ""
-        var comments: [Comment] = []
+//    struct Result: Mappable {
+//        var pageToken: String = ""
+//        var comments: [Comment] = []
+//
+//        init?(map: Map) { }
+//        mutating func mapping(map: Map) {
+//            comments <- map["items"]
+//        }
+//    }
 
-        init?(map: Map) { }
-        mutating func mapping(map: Map) {
-            comments <- map["items"]
-        }
-    }
+//    struct AllParams {
+//        var snippet: String
+//        var channelId: String
+//        var videoId: String
+//        var textOriginal: String
+//        func toJSON() -> [String: Any] {
+//            return [
+//                "part": snippet,
+//                "channelId": channelId,
+//                "videoId": videoId,
+//                "topLevelComment.snippet.textOriginal": textOriginal
+//            ]
+//        }
+//    }
 
-    struct ReplyComment {
-        var textOriginal: String
+    struct MyParams {
+        var channelId: String = ""
+        var videoId: String = ""
+        var textOriginal: String = ""
+
         func toJSON() -> [String: Any] {
+            let topLevelComment: [String: Any] = [
+                "snippet": [
+                    "textOriginal": textOriginal
+                ]
+            ]
             return [
-                "textOriginal": textOriginal
+                "snippet": [
+                    "channelId": channelId,
+                    "videoId": videoId,
+                    "topLevelComment": topLevelComment
+                ]
             ]
         }
     }
 
-    struct AllParams {
-        var snippet: String
-        var channelId: String
-        var videoId: String
-        var textOriginal: String
-        var key: String
-        func toJSON() -> [String: Any] {
-            return [
-                "part": snippet,
-                "channelId": channelId,
-                "videoId": videoId,
-                "topLevelComment.snippet.textOriginal": textOriginal,
-                "key": key
-            ]
-        }
-    }
-
-    static func postComments(params: AllParams, completion: @escaping APICompletionFailure) -> Request? {
-        let path = Api.Path.Comment.comment
-        return api.request(method: .post, urlString: path, parameters: params.toJSON(), encoding: JSONEncoding.default, headers: Api.header) { (_) in
-            #warning("Later")
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let json):
-//                    guard let json = json as? JSObject, let result = Mapper<Result>().map(JSON: json) else {
-//                        completion(.failure(Api.Error.json))
-//                        return
-//                    }
-//                    completion(.success)
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-            if params.textOriginal.contains("ok") {
-                completion(.success)
-            } else {
-                completion(.failure)
+    static func postComments(params: MyParams, completion: @escaping CompletionPost) -> Request? {
+        let path = Api.Path.Comment.comment + "?part=snippet"
+        return api.request(method: .post, urlString: path, parameters: params.toJSON(), encoding: JSONEncoding.default, headers: Api.header) { (result) in
+            DispatchQueue.main.async {
+                completion(result)
             }
         }
     }

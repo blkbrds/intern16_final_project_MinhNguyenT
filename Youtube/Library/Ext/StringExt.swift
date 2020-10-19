@@ -162,6 +162,19 @@ extension String {
         duration.remove(at: duration.index(before: duration.endIndex))
         return duration
     }
+
+    func convertDateFormatter() -> String {
+        let date: String = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.timeZone = NSTimeZone(name: "ICT") as TimeZone?
+        dateFormatter.locale = Locale(identifier: "your_loc_id")
+        let convertedDate = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = "yyyy MMM HH:mm EEEE"
+        dateFormatter.timeZone = NSTimeZone(name: "ICT") as TimeZone?
+        let timeStamp = dateFormatter.string(from: convertedDate ?? Date())
+        return timeStamp
+    }
 }
 
 extension Character {

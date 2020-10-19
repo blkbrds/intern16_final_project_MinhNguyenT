@@ -31,15 +31,15 @@ final class DetailViewModel {
     }
 
     func viewModelForReplyCell(at indexPath: IndexPath) -> CommentViewModel {
-        return CommentViewModel(replies: comments[indexPath.section - SectionType.allCases.count].reply[indexPath.row])
+        return CommentViewModel(replies: video.comments[indexPath.section - SectionType.allCases.count].reply[indexPath.row])
     }
 
     func viewModelForCommentHeader(at section: Int) -> CommentHeaderViewModel {
-        return CommentHeaderViewModel(comment: comments[section - SectionType.allCases.count])
+        return CommentHeaderViewModel(comment: video.comments[section - SectionType.allCases.count])
     }
 
     func numberOfSecction() -> Int {
-        return SectionType.allCases.count + comments.count
+        return SectionType.allCases.count + video.comments.count
     }
 
     func numberOfItemsInSection(section: Int) -> Int {
@@ -49,8 +49,8 @@ final class DetailViewModel {
                 return 1
             }
         } else {
-            if comments[section - SectionType.allCases.count].reply.count <= 3 {
-                return comments[section - SectionType.allCases.count].reply.count
+            if video.comments[section - SectionType.allCases.count].reply.count <= 3 {
+                return video.comments[section - SectionType.allCases.count].reply.count
             } else {
                 return 4
             }
@@ -65,23 +65,23 @@ final class DetailViewModel {
             case .videoChannel:
                 return 70
             case .comment:
-                return 0.0
+                return 0
             }
         } else {
             return UITableView.automaticDimension
         }
     }
 
-    func loadApiComment(isLoadMore: Bool, completion: @escaping APICompletion) {
-        let params = Api.Detail.CommentParams(part: "snippet", videoId: video.videoID, key: App.String.apiKey, maxResults: 5, pageToken: pageToken)
+    func loadApiComment(completion: @escaping APICompletion) {
+        let params = Api.Detail.CommentParams(part: "snippet", videoId: video.videoID, key: App.String.apiKey, maxResults: 10, pageToken: pageToken)
         Api.Detail.getComments(params: params) { [weak self] (result) in
             guard let this = self else { return }
             this.isLoading = false
             switch result {
             case .success(let result):
-                this.comments = result.comments
+                this.video.comments = result.comments
                 let dispatchGroup = DispatchGroup()
-                for index in 0 ..< this.comments.count {
+                for index in 0 ..< this.video.comments.count {
                     dispatchGroup.enter()
                     this.loadApiReply(commentIndex: index, isLoadMore: false) { _ in
                         dispatchGroup.leave()
@@ -90,6 +90,7 @@ final class DetailViewModel {
                 dispatchGroup.notify(queue: .main) {
                     completion(.success)
                 }
+                this.pageToken = result.pageToken
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -97,13 +98,13 @@ final class DetailViewModel {
     }
 
     func loadApiReply(commentIndex: Int, isLoadMore: Bool, completion: @escaping APICompletion) {
-        let params = Api.Detail.ReplyParams(part: "snippet", parentId: comments[commentIndex].id, key: App.String.apiKey, maxResults: 10, pageToken: pageToken)
+        let params = Api.Detail.ReplyParams(part: "snippet", parentId: video.comments[commentIndex].id, key: App.String.apiKey, maxResults: 5, pageToken: pageToken)
         Api.Detail.getReply(params: params) { [weak self] (result) in
             guard let this = self else { return }
             this.isLoading = false
             switch result {
             case .success(let result):
-                this.comments[commentIndex].reply = result.replies
+                this.video.comments[commentIndex].reply = result.replies
                 completion(.success)
             case .failure(let error):
                 completion(.failure(error))
@@ -153,17 +154,16 @@ final class DetailViewModel {
         }
     }
 
-    func addComment(commentText: String) {
-        let comment: Comment = Comment(authorName: Session.shared.userName, commentDisPlay: commentText, authorImageUrl: Session.shared.userImageURL, id: "TM")
-        video.comments.insert(comment, at: 0)
-    }
+//    func addComment(commentText: String) {
+//        let comment: Comment = Comment(authorName: Session.shared.userName, commentDisPlay: commentText, authorImageUrl: Session.shared.userImageURL, id: "TM")
+//        video.comments.insert(comment, at: 0)
+//    }
 
     func postComment(commentText: String, completion: @escaping APICompletionFailure) {
-        let params = Api.Comment.AllParams(snippet: "snippet", channelId: video.channel?.id ?? "", videoId: video.videoID, textOriginal: commentText, key: App.String.apiKey)
+        let params = Api.Comment.MyParams(channelId: video.channel?.id ?? "", videoId: video.videoID, textOriginal: commentText)
         Api.Comment.postComments(params: params) { (result) in
             switch result {
             case .success:
-                self.addComment(commentText: params.textOriginal)
                 completion(.success)
             case .failure:
                 completion(.failure)
@@ -204,5 +204,11 @@ extension DetailViewModel {
         case videoDetail
         case videoChannel
         case comment
+    }
+}
+
+extension DetailViewModel {
+    func viewModelForReplyDetail(at indexPath: IndexPath) -> RepliesViewModel {
+        return RepliesViewModel(comment: video.comments[indexPath.section - SectionType.allCases.count])
     }
 }

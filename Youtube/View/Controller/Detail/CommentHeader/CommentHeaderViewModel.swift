@@ -9,6 +9,7 @@
 import Foundation
 
 final class CommentHeaderViewModel {
+
      var userComment: Comment?
 
      init(comment: Comment? = nil) {

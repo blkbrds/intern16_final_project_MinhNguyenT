@@ -14,15 +14,17 @@ extension Api.Home {
 
     struct Params {
         var part: String
-        var keySearch: String
+        var chart: String
         var key: String
+        var regionCode: String
         var pageToken: String
 
         func toJSON() -> [String: Any] {
             return [
                 "part": part,
-                "keySearch": keySearch,
+                "chart": chart,
                 "key": key,
+                "regionCode": regionCode,
                 "pageToken": pageToken
             ]
         }
@@ -70,7 +72,7 @@ extension Api.Home {
 
     @discardableResult
     static func getPlaylist(params: Params, completion: @escaping Completion<Result>) -> Request? {
-        let path = Api.Path.Home.path
+        let path = Api.Path.Home.videoDuration
         return api.request(method: .get, urlString: path, parameters: params.toJSON()) { (result) in
             DispatchQueue.main.async {
                 switch result {

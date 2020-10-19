@@ -38,7 +38,7 @@
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="comment..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DWd-DD-y0Z">
                             <rect key="frame" x="0.0" y="0.0" width="332" height="55"/>
-                            <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.95045387110000001" green="0.95478502769999996" blue="0.96777849739999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -51,7 +51,7 @@
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="Hje-2D-bgV" secondAttribute="bottom" constant="10" id="CnB-br-oXN"/>
                                 <constraint firstAttribute="trailing" secondItem="Hje-2D-bgV" secondAttribute="trailing" id="PTS-wa-cnr"/>

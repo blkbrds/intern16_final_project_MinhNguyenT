@@ -12,7 +12,7 @@ import ObjectMapper
 class Comment: Mappable {
 
     var id: String = ""
-    var publishedAt: Date = Date()
+    var publishedAt: String = ""
     var authorName: String = ""
     var authorImageUrl: String = ""
     var commentDisplay: String = ""
@@ -39,32 +39,3 @@ class Comment: Mappable {
         textOriginal <- map["snippet.topLevelComment.snippet.textOriginal"]
     }
 }
-
-//struct ManualComment {
-//
-//    enum TypeComment {
-//        case comment
-//        case reply
-//        case seeMore
-//    }
-//
-//    var type: TypeComment = .comment
-//    var data: Comment = Comment()
-//
-//    func dummyData() -> [ManualComment] {
-//        var dummyData: [ManualComment] = []
-//        for comment in commentList {
-//            let a1 = ManualComment(type: .comment, data: Comment())
-//            dummyData.append(a1)
-//            for (index, reply) in a1.replys.enumerate() {
-//                let rp = ManualComment(type: .reply, data: Comment())
-//                dummyData.append(rp)
-//                if index == 3 {
-//                    dummyData.append(ManualComment(type: .seeMore, data: Comment()))
-//                }
-//            }
-//
-//        }
-//        return dummyData
-//    }
-//}

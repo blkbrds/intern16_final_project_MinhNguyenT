@@ -12,7 +12,7 @@ import ObjectMapper
 class Reply: Mappable {
 
     var id: String = ""
-    var publishedAt: Date = Date()
+    var publishedAt: String = ""
     var authorName: String = ""
     var authorImageUrl: String = ""
     var textOriginal: String = ""

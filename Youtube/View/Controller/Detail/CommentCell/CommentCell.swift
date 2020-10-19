@@ -34,7 +34,7 @@ final class CommentCell: UITableViewCell {
     func updateUI() {
         guard let replies = viewModel.userReplies, let url = URL(string: replies.authorImageUrl) else { return }
         profileUserImgae.sd_setImage(with: url)
-        nameUserLabel.text = replies.authorName
+        nameUserLabel.text = "\(replies.authorName) - \(replies.publishedAt.convertDateFormatter())"
         commentUser.text = replies.textOriginal
     }
 }

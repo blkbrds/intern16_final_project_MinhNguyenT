@@ -42,6 +42,7 @@
 		5274B25A25385DC300A01710 /* ReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274B25825385DC300A01710 /* ReplyViewController.swift */; };
 		5274B25B25385DC300A01710 /* ReplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5274B25925385DC300A01710 /* ReplyViewController.xib */; };
 		5274B25F2538603C00A01710 /* RepliesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274B25E2538603C00A01710 /* RepliesViewModel.swift */; };
+		52AFE718253D522100D68FCA /* login.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52AFE717253D522100D68FCA /* login.plist */; };
 		52C239512530053C009806A3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2394F2530053C009806A3 /* SearchViewController.swift */; };
 		52C239522530053C009806A3 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C239502530053C009806A3 /* SearchViewController.xib */; };
 		52DC3AA425218F56001A5B6E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DC3AA325218F56001A5B6E /* Video.swift */; };
@@ -150,6 +151,7 @@
 		5274B25825385DC300A01710 /* ReplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyViewController.swift; sourceTree = "<group>"; };
 		5274B25925385DC300A01710 /* ReplyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyViewController.xib; sourceTree = "<group>"; };
 		5274B25E2538603C00A01710 /* RepliesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepliesViewModel.swift; sourceTree = "<group>"; };
+		52AFE717253D522100D68FCA /* login.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = login.plist; sourceTree = "<group>"; };
 		52C2394F2530053C009806A3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		52C239502530053C009806A3 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		52DC3AA325218F56001A5B6E /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 		A3AED5142516502D00B5E6D0 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				52AFE717253D522100D68FCA /* login.plist */,
 				523FB923252EF1A000B402CA /* GoogleService-Info.plist */,
 				A3AED4BF25164B3F00B5E6D0 /* Info.plist */,
 				A3AED52F2516524800B5E6D0 /* LaunchScreen.storyboard */,
@@ -717,6 +720,7 @@
 				A3AED5452516584700B5E6D0 /* HomeViewController.xib in Resources */,
 				52C239522530053C009806A3 /* SearchViewController.xib in Resources */,
 				52DC3AB92521C518001A5B6E /* NavigationBarView.xib in Resources */,
+				52AFE718253D522100D68FCA /* login.plist in Resources */,
 				5274B25B25385DC300A01710 /* ReplyViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

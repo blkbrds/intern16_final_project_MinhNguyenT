@@ -58,7 +58,7 @@ final class HomeCell: TableCell {
         videoImageView.sd_setImage(with: url)
         videoTitleLabel.text = video.title
         channelTitleLabel.text = video.channel?.title
-        datePublishLabel.text = video.createdTime
+        datePublishLabel.text = video.createdTime.convertDateFormatter()
         subcribeButton.isSelected = video.isFavorite
         if video.duration.isNotEmpty {
             durationTimeLabel.text = video.duration.getFormattedDuration()

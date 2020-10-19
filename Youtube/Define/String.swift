@@ -16,6 +16,9 @@ extension App {
 
     struct String {
         static let apiKey = "AIzaSyDxoMGIPLA4j4QVtdOuxjrsXGeOhx-RZCI"
+        //AIzaSyBYlFiI915UTVOdb2HUpDL_rgb_iJRz644"
+        //AIzaSyA790TZ1NAfkubwNHUTOF0F2UfGK1dvKuI"
+        //AIzaSyDxoMGIPLA4j4QVtdOuxjrsXGeOhx-RZCI"
         //AIzaSyAr51_Fv9ZfDprV2PutbgzdkMTl1XUFqgU"
         static let dateFormatYYYYMMDDHHmmss = "yyyy-MM-dd HH:mm:ss"
         //"AIzaSyDqqAH9z5pvN0UnysqaT5LbA_JWiuQ8wI4"
